@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 
-
-
-  @override
 class Usuario extends StatelessWidget{
   Widget build (BuildContext context){
     return DatosGenerales(
-      labelText: "Nombre",
+      labelText: "Usuario",
       hintText: "RicardoMT",
       icon: Icons.person,
-      onChanged: (Value){},
+      onChanged: (value){},
     );
   }
 }
@@ -22,7 +19,7 @@ class Correo extends StatelessWidget{
       labelText: "Correo",
       hintText: "Usuario@gmail.com",
       keyboardType: TextInputType.emailAddress,
-      onChanged: (Value){},
+      onChanged: (value){},
       icon: Icons.email_rounded,
     );
   }
@@ -33,7 +30,7 @@ class Contras extends StatelessWidget{
   Widget build (BuildContext context){
     return DatosGenerales(
       labelText: "Contraseña",
-      onChanged: (Value){},
+      onChanged: (value){},
       icon: Icons.lock_outline_rounded,
       obscureText: true,
     );
@@ -65,7 +62,7 @@ class DatosGenerales extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: AppColores.backgroundsComponent,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
         keyboardType: keyboardType,

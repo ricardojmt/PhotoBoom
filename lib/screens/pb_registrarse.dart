@@ -3,7 +3,7 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
 
-class PbInicioSesion extends StatelessWidget {
+class PbRegistrarse extends StatelessWidget {
   static String id = "pb_inicio_sesion";
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class PbInicioSesion extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Iniciar seccion", style: AppTipoText.texto,),
+                  Text("Registrarse", style: AppTipoText.texto,),
                 ],
               ),
               SizedBox(
@@ -43,10 +43,13 @@ class PbInicioSesion extends StatelessWidget {
                 height: 15.0,
               ),
               Contras(),
+              SizedBox(
+                height: 15.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Registrarse", style: AppTipoText.texto,),
+                  Text("Iniciar seccion", style: AppTipoText.texto,),
                 ],
               ),
             ]
