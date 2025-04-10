@@ -3,6 +3,7 @@ import 'package:photoboom/components/botonconfirmacion.dart';
 import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
+import 'package:photoboom/core/app_lineas_decoracion.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/pb_olvide_contrasena.dart';
 import 'package:photoboom/screens/pb_registrarse.dart';
@@ -14,11 +15,12 @@ class PbInicioSesion extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColores.backgrounds,
-        body: Center(
-          child: Column(
+        body: Lineas(
+          child: Center(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
+
               Logogrande(),
               SizedBox(
                 height: 20.0,
@@ -68,6 +70,7 @@ class PbInicioSesion extends StatelessWidget {
               Iniciar(),
             ]
           ),
+        ),
         ),
       ), 
     );

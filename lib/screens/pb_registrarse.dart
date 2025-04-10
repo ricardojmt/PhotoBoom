@@ -5,6 +5,7 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
+import 'package:photoboom/core/app_lineas_decoracion.dart';
 
 class PbRegistrarse extends StatelessWidget {
   static String id = "pb_resgistrarse";
@@ -13,7 +14,8 @@ class PbRegistrarse extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColores.backgrounds,
-        body: Center(
+        body: Lineas(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -61,6 +63,7 @@ class PbRegistrarse extends StatelessWidget {
 
             ]
           ),
+        ),
         ),
       ), 
     );

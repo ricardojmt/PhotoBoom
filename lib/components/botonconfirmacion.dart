@@ -68,7 +68,7 @@ class Confirmacion extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30), // Bordes redondeados
           ),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 80), // Alto del botón
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Alto del botón
         ),
         onPressed: onPressed,
         child: Text(
