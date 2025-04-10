@@ -25,15 +25,6 @@ class PbRegistrarse extends StatelessWidget {
               SizedBox(
                 height: 20.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Registrarse", style: AppTipoText.texto,),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
               Usuario(),
               SizedBox(
                 height: 15.0,

@@ -38,10 +38,6 @@ class PbInicioSesion extends StatelessWidget {
               SizedBox(
                 height: 15.0,
               ),
-              Correo(),
-              SizedBox(
-                height: 15.0,
-              ),
               Contras(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
