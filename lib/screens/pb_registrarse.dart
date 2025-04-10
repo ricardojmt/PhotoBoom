@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:photoboom/components/botonconfirmacion.dart';
 import 'package:photoboom/components/datosgenerales.dart';
+import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
+import 'package:photoboom/screens/pb_inicio_sesion.dart';
 
 class PbRegistrarse extends StatelessWidget {
-  static String id = "pb_inicio_sesion";
+  static String id = "pb_resgistrarse";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -14,14 +17,11 @@ class PbRegistrarse extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("PhotoBoom",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColores.logotext,
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
+              Logogrande(),
+              SizedBox(
+                height: 20.0,
               ),
-              ),
+              Nombre(),
               SizedBox(
                 height: 20.0,
               ),
@@ -38,11 +38,27 @@ class PbRegistrarse extends StatelessWidget {
                 height: 15.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Iniciar seccion", style: AppTipoText.texto,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, PbInicioSesion.id);
+                    },
+                    child: Text("Iniciar sesión", style: AppTipoText.texto),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, PbRegistrarse.id);
+                    },
+                    child: Text("Registrarse", style: AppTipoText.texto),
+                  ),
                 ],
               ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Registrarme(),
+
             ]
           ),
         ),

@@ -2,6 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 
+class Nombre extends StatelessWidget{
+  Widget build (BuildContext context){
+    return DatosGenerales(
+      labelText: "Nombre completo",
+      hintText: "Jerson Ricardo Murillo Tellez",
+      onChanged: (value){},
+      icon: Icons.person,
+    );
+  }
+}
+
 class Usuario extends StatelessWidget{
   Widget build (BuildContext context){
     return DatosGenerales(
@@ -33,6 +44,18 @@ class Contras extends StatelessWidget{
       onChanged: (value){},
       icon: Icons.lock_outline_rounded,
       obscureText: true,
+    );
+  }
+}
+
+class Correorecuperacion extends StatelessWidget{
+  Widget build (BuildContext context){
+    return DatosGenerales(
+      labelText: "Correo de recuperacion",
+      hintText: "Usuario@gmail.com",
+      keyboardType: TextInputType.emailAddress,
+      onChanged: (value){},
+      icon: Icons.email_rounded,
     );
   }
 }
