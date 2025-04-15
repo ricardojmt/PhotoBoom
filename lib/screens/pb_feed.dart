@@ -6,33 +6,47 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 
-class PbOlvideContrasena extends StatelessWidget {
-  static String id = "pb_olvide_contraseña";
+class PbFeed extends StatelessWidget {
+  static String id = "pb_feed";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColores.backgrounds,
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            flechainicio(),
-            Logopequeno(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                flechainicio(),
+                Logopequeno(),
+              ],
+            ),
+            
             Expanded(
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Logogrande(),
                     Textoco(),
                     Textola(),
                     SizedBox(height: 15.0),
                     Correo(),
                     SizedBox(height: 15.0),
-                    enviaromc(),
                   ],
                 ),
               ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                feed(),
+                retos(),
+                fotos(),
+                corazon(),
+                perfil(),
+              ],
             ),
           ],
         ),

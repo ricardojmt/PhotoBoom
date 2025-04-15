@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/pb_correo_contrasena.dart';
+import 'package:photoboom/screens/pb_feed.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
+import 'package:photoboom/screens/pb_registrarse.dart';
 
 class Registrarme extends StatelessWidget{
   Widget build (BuildContext context){
@@ -20,7 +22,7 @@ class Iniciar extends StatelessWidget{
     return Confirmacion(
       textot: "Iniciar",
       onPressed: () {
-        Navigator.pushNamed(context, PbInicioSesion.id);
+        Navigator.pushNamed(context, PbFeed.id);
       },
     );
   }

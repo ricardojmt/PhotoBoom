@@ -12,7 +12,7 @@ class Logogrande extends StatelessWidget{
 class Logopequeno extends StatelessWidget{
   Widget build (BuildContext context){
     return Confirmacion(
-      fontSize: 50,
+      fontSize: 30,
     );
   }
 }

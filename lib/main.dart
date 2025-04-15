@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/screens/pb_correo_contrasena.dart';
+import 'package:photoboom/screens/pb_feed.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
 import 'package:photoboom/screens/pb_olvide_contrasena.dart';
 import 'package:photoboom/screens/pb_registrarse.dart';
@@ -25,6 +26,7 @@ class MainApp extends StatelessWidget {
         PbInicioSesion.id: (context) => PbInicioSesion(),
         PbOlvideContrasena.id: (context) => PbOlvideContrasena(),
         PbCorreoContrasena.id: (context) => PbCorreoContrasena(),
+        PbFeed.id: (context) => PbFeed(),
       },
     );
   }
