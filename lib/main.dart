@@ -26,7 +26,6 @@ class MainApp extends StatelessWidget {
         PbOlvideContrasena.id: (context) => PbOlvideContrasena(),
         PbCorreoContrasena.id: (context) => PbCorreoContrasena(),
       },
-      
     );
   }
 }
