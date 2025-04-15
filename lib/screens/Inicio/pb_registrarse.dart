@@ -4,7 +4,7 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
-import 'package:photoboom/screens/pb_inicio_sesion.dart';
+import 'package:photoboom/screens/Inicio/pb_inicio_sesion.dart';
 
 class PbRegistrarse extends StatelessWidget {
   static String id = "pb_resgistrarse";

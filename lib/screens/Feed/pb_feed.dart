@@ -16,9 +16,8 @@ class PbFeed extends StatelessWidget {
         body: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                flechainicio(),
                 Logopequeno(),
               ],
             ),

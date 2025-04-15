@@ -28,7 +28,9 @@ class Confirmacion extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Text(
       "PhotoBoom",
       textAlign: TextAlign.center,
       style: TextStyle(
@@ -37,6 +39,7 @@ class Confirmacion extends StatelessWidget {
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
       ),
+    ),
     );
   }
 }
