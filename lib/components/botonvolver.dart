@@ -10,6 +10,7 @@ import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Botonvolver(
+      alignment: Alignment.topLeft,
       icon: Icons.arrow_back,
       color: AppColores.fristtext,
     );

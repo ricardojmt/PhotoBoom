@@ -22,17 +22,12 @@ class PbPortafolio extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                   children: [
-                    Textoco(),
-                    Textola(),
-                    SizedBox(height: 15.0),
-                    Correo(),
-                    SizedBox(height: 15.0),
+                    CircleAvatar(radius: 80,
+                      backgroundImage:  AssetImage('assets/img/descargar.jpeg'),
+                    )
                   ],
-                ),
               ),
             ),
             Row(
