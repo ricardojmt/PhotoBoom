@@ -6,8 +6,8 @@ import 'package:photoboom/screens/pb_feed.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
 import 'package:photoboom/screens/pb_registrarse.dart';
 
-class Registrarme extends StatelessWidget{
-  Widget build (BuildContext context){
+class Registrarme extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Confirmacion(
       textot: "Registarme",
       onPressed: () {
@@ -17,8 +17,8 @@ class Registrarme extends StatelessWidget{
   }
 }
 
-class Iniciar extends StatelessWidget{
-  Widget build (BuildContext context){
+class Iniciar extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Confirmacion(
       textot: "Iniciar",
       onPressed: () {
@@ -28,8 +28,8 @@ class Iniciar extends StatelessWidget{
   }
 }
 
-class enviaromc extends StatelessWidget{
-  Widget build (BuildContext context){
+class enviaromc extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Confirmacion(
       textot: "Enviar",
       onPressed: () {
@@ -39,10 +39,10 @@ class enviaromc extends StatelessWidget{
   }
 }
 
-class iniciosesion extends StatelessWidget{
-  Widget build (BuildContext context){
+class iniciosesion extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Confirmacion(
-      textot: "iniciar secion",
+      textot: "iniciar sesión",
       onPressed: () {
         Navigator.pushNamed(context, PbInicioSesion.id);
       },
@@ -54,12 +54,10 @@ class Confirmacion extends StatelessWidget {
   final String textot;
   final VoidCallback onPressed;
 
-
   const Confirmacion({
     required this.textot,
     required this.onPressed,
-
-    });
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -70,7 +68,8 @@ class Confirmacion extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30), // Bordes redondeados
           ),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Alto del botón
+          padding: EdgeInsets.symmetric(
+              vertical: 10, horizontal: 20), // Alto del botón
         ),
         onPressed: onPressed,
         child: Text(

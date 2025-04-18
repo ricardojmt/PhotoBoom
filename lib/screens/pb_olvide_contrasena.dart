@@ -16,7 +16,7 @@ class PbOlvideContrasena extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            flechainicio(),
+            Flechainicio(),
             Logopequeno(),
             Expanded(
               child: Center(

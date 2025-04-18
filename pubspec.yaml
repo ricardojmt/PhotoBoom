@@ -28,3 +28,9 @@ flutter:
     - family: KaushanScript
       fonts:
         - asset: assets/fonts/KaushanScript-Regular.ttf
+
+  assets:
+    - assets/images/imagen1.jpg
+    - assets/images/imagen2.jpg
+    - assets/images/imagen3.jpg
+    - assets/images/imagen4.jpg
