@@ -5,14 +5,23 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
+import 'package:photoboom/screens/Chats/lista_chats.dart';
 
 class PbFeed extends StatelessWidget {
   static String id = "pb_feed";
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColores.backgrounds,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.red,
+          child: const Icon(Icons.chat, color: Colors.white),
+          onPressed: () {
+            Navigator.pushNamed(context, ListaChats.id);
+          },
+        ),
         body: Column(
           children: [
             Row(
@@ -21,7 +30,6 @@ class PbFeed extends StatelessWidget {
                 Logopequeno(),
               ],
             ),
-            
             Expanded(
               child: Center(
                 child: Column(
