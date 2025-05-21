@@ -6,7 +6,7 @@ import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_lineas_decoracion.dart';
 
 class PbCorreoContrasena extends StatelessWidget {
-  static String id = "pb_correo_contraseña";
+  static const String id = "/correo-contraseña";
    @override
 Widget build(BuildContext context) {
   return SafeArea(
