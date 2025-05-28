@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682403335606",
+    "project_id": "photoboom-2fe50",
+    "storage_bucket": "photoboom-2fe50.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682403335606:android:93ffc17966876d37840517",
+        "android_client_info": {
+          "package_name": "com.example.photoboom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD78yfCMCT6eLnvsNqeAI95PDdCejFMtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
