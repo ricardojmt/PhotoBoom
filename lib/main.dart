@@ -6,6 +6,7 @@ import 'package:photoboom/screens/Inicio/pb_inicio_sesion.dart';
 import 'package:photoboom/screens/Inicio/pb_olvide_contrasena.dart';
 import 'package:photoboom/screens/Inicio/pb_registrarse.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
+import 'package:photoboom/screens/Ajustes/pb_ajustes.dart';
 
 void main() {
   runApp(const MainApp());
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         PbCorreoContrasena.id: (context) => PbCorreoContrasena(),
         PbFeed.id: (context) => PbFeed(),
         PbPortafolio.id: (context) => PbPortafolio(),
+        PbAjustes.id: (context) => PbAjustes(),
       },
     );
   }

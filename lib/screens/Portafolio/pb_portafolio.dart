@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:photoboom/components/botonconfirmacion.dart';
 import 'package:photoboom/components/botonvolver.dart';
-import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
-import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 
 class PbPortafolio extends StatelessWidget {

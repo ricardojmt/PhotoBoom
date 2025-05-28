@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/screens/Feed/pb_feed.dart';
-import 'package:photoboom/screens/Inicio/pb_olvide_contrasena.dart';
-import 'package:photoboom/screens/Inicio/pb_registrarse.dart';
-import 'package:photoboom/screens/Inicio/pb_correo_contrasena.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
+import 'package:photoboom/screens/Ajustes/pb_ajustes.dart';
 
 class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -70,7 +68,7 @@ class configuraciones extends StatelessWidget {
       alignment: Alignment.topRight,
       icon: Icons.build_circle_rounded,
       color: AppColores.logotext,
-      cambio: PbPortafolio.id,
+      cambio: PbAjustes.id,
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/Inicio/pb_correo_contrasena.dart';
 import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Inicio/pb_inicio_sesion.dart';
-import 'package:photoboom/screens/Inicio/pb_registrarse.dart';
 
 class Registrarme extends StatelessWidget{
   Widget build (BuildContext context){
