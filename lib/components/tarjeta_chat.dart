@@ -1,56 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
-import 'package:photoboom/core/models/chat.dart'; // Asegúrate de importar el modelo Chat
+import 'package:photoboom/core/app_tipo_text.dart';
 
+/// Widget que muestra una fila de chat en la lista, con indicador opcional.
 class TarjetaChat extends StatelessWidget {
-  final Chat chat;
-  final VoidCallback onTap; // Corregido: era "onlap"
+  final String nombre;
+  final String ultimoMensaje;
+  final String hora;
+  final bool indicadorActivo;
+  final VoidCallback onTap;
+  final VoidCallback onCameraTap;
 
-  const TarjetaChat({super.key, required this.chat, required this.onTap});
+  const TarjetaChat({
+    Key? key,
+    required this.nombre,
+    required this.ultimoMensaje,
+    required this.hora,
+    this.indicadorActivo = false,
+    required this.onTap,
+    required this.onCameraTap,
+  }) : super(key: key);
 
-  @override // Corregido: "@override" debe estar en minúsculas y sin espacio después
+  @override
   Widget build(BuildContext context) {
-    return ListTile( // Corregido: era "ListFile"
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(chat.imagenUrl),
-        radius: 25,
-        child: chat.tieneMensajesNoLeidos // Corregido: era "tieneMensajesNoleidos"
-          ? Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: AppColores.logotext, // Corregido: eliminado el emoji
-                  shape: BoxShape.circle,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          children: [
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: AppColores.chatAvatar,
                 ),
+                if (indicadorActivo)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: AppColores.primary,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColores.backgrounds, width: 1.5),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    nombre,
+                    style: AppTipoText.headline6,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    ultimoMensaje,
+                    style: AppTipoText.subtitle2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
-            )
-          : null,
-      ),
-      title: Text(
-        chat.nombreUsuario,
-        style: TextStyle(
-          fontWeight: chat.tieneMensajesNoLeidos 
-              ? FontWeight.bold 
-              : FontWeight.normal,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  hora,
+                  style: AppTipoText.caption,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: onCameraTap,
+                  splashRadius: 20,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-      subtitle: Text(
-        chat.ultimoMensaje,
-        overflow: TextOverflow.ellipsis,
-      ),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${chat.horaUltimoMensaje.hour}:${chat.horaUltimoMensaje.minute.toString().padLeft(2, '0')}',
-            style: const TextStyle(fontSize: 12),
-          ),
-          const Icon(Icons.camera_alt, size: 20),
-        ],
-      ),
-      onTap: onTap,
     );
   }
 }

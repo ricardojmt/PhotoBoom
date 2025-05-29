@@ -5,28 +5,27 @@ import 'package:photoboom/screens/Inicio/pb_inicio_sesion.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 import 'package:photoboom/screens/Chats/lista_chats.dart';
 import 'package:photoboom/screens/Chats/pantalla_chat.dart';
+import 'package:photoboom/core/Repositorios/chat_repositorio.dart';
+import 'package:photoboom/core/models/mensaje.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const PhotoBoomApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class PhotoBoomApp extends StatelessWidget {
+  const PhotoBoomApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      title: 'PhotoBoom',
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColores.backgrounds,
+        primarySwatch: Colors.blue,
       ),
-      initialRoute: PbInicioSesion.id,
+      home: const ListaChats(),
+      // Opcional: rutas con nombre
       routes: {
-        PbInicioSesion.id: (context) =>  PbInicioSesion(),
-        PbFeed.id: (context) => PbFeed(),
-        PbPortafolio.id: (context) => PbPortafolio(),
-        ListaChats.id: (context) => const ListaChats(),
-        PantallaChat.id: (context) => PantallaChat(),  // Sin const
+        ListaChats.id: (_) => const ListaChats(),
       },
     );
   }

@@ -5,7 +5,7 @@ class Chat {
   final String imagenUrl;
   final DateTime horaUltimoMensaje;
   final bool tieneMensajesNoLeidos;
-  final String tipoMensaje; // 'texto', 'video', 'audio'
+  final String tipoMensaje;
 
   Chat({
     required this.id,

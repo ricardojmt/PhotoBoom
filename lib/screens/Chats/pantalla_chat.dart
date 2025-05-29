@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:photoboom/components/botonvolver.dart';
+import 'package:provider/provider.dart';
 import 'package:photoboom/core/app_colores.dart';
+import 'package:photoboom/core/app_tipo_text.dart';
+import 'package:photoboom/core/models/mensaje.dart';
 import 'package:photoboom/core/models/chat.dart';
+import 'package:photoboom/components/botonvolver.dart';
 
-class PantallaChat extends StatefulWidget {
-  static const String id = 'pantalla_chat';
-
-  const PantallaChat({super.key});
+  class PantallaChat extends StatefulWidget {
+  final Chat chat;
+  const PantallaChat({Key? key, required this.chat}) : super(key: key);
 
   @override
   State<PantallaChat> createState() => _PantallaChatState();
 }
 
 class _PantallaChatState extends State<PantallaChat> {
-  final TextEditingController _controller = TextEditingController();
   late Chat _chat;
+  final TextEditingController _controller = TextEditingController();
   final List<String> _messages = [];
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _chat = ModalRoute.of(context)!.settings.arguments as Chat;
-    _messages.addAll([
-      'Hola, ¿cómo estás?',
-      'Estoy bien, gracias por preguntar',
-    ]);
+  void initState() {
+    super.initState();
+    _chat = widget.chat;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _sendMessage() {
