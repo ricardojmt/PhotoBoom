@@ -28,6 +28,20 @@ class FeedBoton extends StatelessWidget {
       icon: Icons.remove_red_eye,
       color: AppColores.logotext,
       onPressed: onPressed,
+<<<<<<< HEAD
+=======
+    );
+  }
+}
+
+class FeedAtajo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+      icon: Icons.remove_red_eye,
+      color: AppColores.logotext,
+      cambio: PbFeed.id,
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
     );
   }
 }
@@ -35,14 +49,32 @@ class FeedBoton extends StatelessWidget {
 class RetosBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
+<<<<<<< HEAD
   const RetosBoton({required this.onPressed});
+=======
+  const Retos({required this.onPressed});
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
 
   @override
   Widget build(BuildContext context) {
     return BotonIcono(
+<<<<<<< HEAD
+=======
       icon: Icons.fiber_new_rounded,
       color: AppColores.logotext,
       onPressed: onPressed,
+    );
+  }
+}
+
+class RetosAtajo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
+      icon: Icons.fiber_new_rounded,
+      color: AppColores.logotext,
+      cambio: '', // Reemplaza con la ruta deseada si existe
     );
   }
 }
@@ -58,6 +90,20 @@ class FotosBoton extends StatelessWidget {
       icon: Icons.camera_alt_rounded,
       color: AppColores.logotext,
       onPressed: onPressed,
+<<<<<<< HEAD
+=======
+    );
+  }
+}
+
+class FotosAtajo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+      icon: Icons.camera_alt_rounded,
+      color: AppColores.logotext,
+      cambio: PbCamara.id,
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
     );
   }
 }
@@ -73,6 +119,20 @@ class CorazonBoton extends StatelessWidget {
       icon: Icons.favorite,
       color: AppColores.logotext,
       onPressed: onPressed,
+<<<<<<< HEAD
+=======
+    );
+  }
+}
+
+class CorazonAtajo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+      icon: Icons.heart_broken_sharp,
+      color: AppColores.logotext,
+      cambio: PbBuscador.id,
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
     );
   }
 }
@@ -88,10 +148,25 @@ class PerfilBoton extends StatelessWidget {
       icon: Icons.person,
       color: AppColores.logotext,
       onPressed: onPressed,
+<<<<<<< HEAD
+=======
     );
   }
 }
 
+class PerfilAtajo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+      icon: Icons.person,
+      color: AppColores.logotext,
+      cambio: PbPortafolio.id,
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
+    );
+  }
+}
+
+<<<<<<< HEAD
 class ConfiguracionesBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
@@ -118,16 +193,49 @@ class BotonVolver extends StatelessWidget {
     required this.color,
     this.cambio,
     this.alignment = Alignment.center,
+=======
+class Configuraciones extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Botonvolver(
+      alignment: Alignment.topRight,
+      icon: Icons.build_circle_rounded,
+      color: AppColores.logotext,
+      cambio: PbAjustes.id,
+    );
+  }
+}
+
+class Botonvolver extends StatelessWidget {
+  final IconData? icon;
+  final Color? color;
+  final String? cambio;
+  final Alignment? alignment;
+
+  const Botonvolver({
+    this.icon,
+    this.color,
+    this.cambio,
+    this.alignment,
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
   });
 
   @override
   Widget build(BuildContext context) {
     return Align(
+<<<<<<< HEAD
       alignment: alignment,
       child: IconButton(
         icon: Icon(icon, color: color),
         onPressed: () {
           if (cambio != null) {
+=======
+      alignment: alignment ?? Alignment.center,
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: () {
+          if (cambio != null && cambio!.isNotEmpty) {
+>>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
             Navigator.pushNamed(context, cambio!);
           } else {
             Navigator.pop(context);

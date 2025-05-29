@@ -4,12 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:photoboom/screens/Retos/pb_retos.dart';
 import 'firebase_options.dart'; //importa las opciones gráficas por firebase CLI
 import 'package:photoboom/core/app_colores.dart';
-import 'package:photoboom/screens/pb_correo_contrasena.dart';
-import 'package:photoboom/screens/pb_feed.dart';
-import 'package:photoboom/screens/pb_inicio_sesion.dart';
-import 'package:photoboom/screens/pb_olvide_contrasena.dart';
-import 'package:photoboom/screens/pb_registrarse.dart';
-import 'package:photoboom/screens/pb_interfaz_feed.dart';
+import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Ajustes/pb_ajustes_notificaciones.dart';
 import 'package:photoboom/screens/ajustes/pb_ajustes_centro_de_ayuda_y_soporte.dart';
 import 'package:photoboom/screens/ajustes/pb_ajustes_cuenta.dart';

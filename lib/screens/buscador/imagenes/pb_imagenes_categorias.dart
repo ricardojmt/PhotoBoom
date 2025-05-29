@@ -5,12 +5,12 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/barrabusqueda.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photoboom/components/imagenesorden.dart';
 import 'package:photoboom/components/categorias.dart';
 
 class PbImagenesCategorias extends StatelessWidget {
   static String id = "pb_imagenes_categorias";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
