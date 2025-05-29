@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:photoboom/core/app_colores.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_Notificaciones.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_centro_de_ayuda_y_soporte.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_cuenta.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_funciones_experimentales_o_beta.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_privacidad_y_seguridad.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes_sesion.dart';
+import 'package:photoboom/screens/Ajustes/pb_ajustes_notificaciones.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes_centro_de_ayuda_y_soporte.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes_cuenta.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes_funciones_experimentales_o_beta.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes_privacidad_y_seguridad.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes_sesion.dart';
 import 'package:photoboom/screens/Feed/pb_feed.dart';
 
 //------------------pb_ajustes--------------------------------
@@ -342,7 +341,7 @@ class _ajustesState extends State<ajustes> {
             margin: EdgeInsets.symmetric(vertical: 10),
             padding: EdgeInsets.symmetric(horizontal: 0.5),
             decoration: BoxDecoration(
-              color: _isHovering ? Colors.blueAccent : Colors.white, // Cambia color si está hover
+              color: _isHovering ? const Color(0xFF4E4F50) : Colors.white, // Cambia color si está hover
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(

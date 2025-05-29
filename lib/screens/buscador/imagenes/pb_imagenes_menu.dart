@@ -5,9 +5,13 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/barrabusqueda.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photoboom/components/imagenesorden.dart';
 
-class PbBuscador extends StatelessWidget {
-  static String id = "pb_buscador";
+
+
+class PbImagenesmenu extends StatelessWidget {
+  static String id = "pb_imagenes_menu";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,36 +21,40 @@ class PbBuscador extends StatelessWidget {
           children: [
             Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Stack(
                   children: [
-                    Logopequeno(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: flechainicio(),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Logopequenoimagenes(),
+                    ),
                   ],
                 ),
                 BarraBusqueda(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    busquedaperfiles(),
-                    busquedaimagenes(),
+                    imagenescategorias(),
+                    imagenestendencia(),
                   ],
-                ), // ← Clase reutilizable
+                ),
               ],
             ),
             Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Textoco(),
-                    Textola(),
-                    SizedBox(height: 15.0),
-                    Correo(),
-                    SizedBox(height: 15.0),
-                  ],
-                ),
-              ),
-            ),
+  child: GaleriaImagenes(
+    imagePaths: [
+      'assets/img/imagen4.jpeg',
+      'assets/img/imagen2.jpeg',
+      'assets/img/imagen3.jpeg',
+      'assets/img/imagen1.jpeg',
+      'assets/img/imagen6.jpeg',
+      'assets/img/imagen5.jpg',
+    ],
+  ),
+),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,

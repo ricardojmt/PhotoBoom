@@ -36,6 +36,17 @@ class Logopequenoajustes extends StatelessWidget{
   }
 }
 
+class Logopequenoimagenes extends StatelessWidget{
+  Widget build (BuildContext context){
+    return Confirmacion(
+      texto: 'PhotoBoom - Imagenes',
+      alignment: Alignment.topCenter,
+      fontSize: 30,
+      cambio: PbFeed.id,
+    );
+  }
+}
+
 
 class Confirmacion extends StatelessWidget {
   final double fontSize;

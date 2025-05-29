@@ -13,6 +13,9 @@ import 'package:photoboom/screens/Inicio/pb_olvide_contrasena.dart';
 import 'package:photoboom/screens/Inicio/pb_registrarse.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
+import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_categorias.dart';
+import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_menu.dart';
+import 'package:photoboom/screens/buscador/pb_buscador.dart';
 
 void main() {
   runApp(const MainApp());
@@ -44,6 +47,11 @@ class MainApp extends StatelessWidget {
         PbAjustesCentroDeAyudaYSoporte.id: (context) => PbAjustesCentroDeAyudaYSoporte(),
         PbAjustesFuncionesExperimentalesOBeta.id: (context) => PbAjustesFuncionesExperimentalesOBeta(),
         PbAjustesSesion.id: (context) => PbAjustesSesion(),
+        //Buscador
+        PbBuscador.id: (context) => PbBuscador(),
+        PbImagenesmenu.id: (context) => PbImagenesmenu(),
+        PbImagenesCategorias.id: (context) => PbImagenesCategorias(),
+
       },
     );
   }

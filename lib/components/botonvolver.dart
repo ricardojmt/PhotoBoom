@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
-import 'package:photoboom/screens/Ajustes/pb_ajustes.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
+import 'package:photoboom/screens/buscador/pb_buscador.dart';
 
 class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class corazon extends StatelessWidget {
     return Botonvolver(
       icon: Icons.heart_broken_sharp,
       color: AppColores.logotext,
+      cambio: PbBuscador.id,
     );
   }
 }
