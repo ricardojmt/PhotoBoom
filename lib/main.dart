@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; //importa firebase core
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart'; //importa las opciones gráficas por firebase CLI
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/screens/pb_correo_contrasena.dart';

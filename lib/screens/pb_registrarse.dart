@@ -5,9 +5,43 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PbRegistrarse extends StatelessWidget {
   static String id = "pb_resgistrarse";
+  final TextEditingController fullnameController = TextEditingController();
+  final TextEditingController nameuserController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final FirebaseAuth _registerauth = FirebaseAuth.instance;
+
+  Future<String?> registeruser(
+      String fullname, String nameuser, String email, String password) async {
+    try {
+      UserCredential userCredential = await _registerauth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'fullname': fullname,
+          'nameuser': nameuser,
+          'uid': user.uid,
+          'email': user.email,
+          'isVerified': user.emailVerified,
+          'CreatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+      return null;
+    } catch (e) {
+      print('Error al registrarse:$e');
+      return e.toString();
+      ;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,19 +53,27 @@ class PbRegistrarse extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            Nombre(),
+            Nombre(
+              controller: fullnameController,
+            ),
             SizedBox(
               height: 20.0,
             ),
-            Usuario(),
+            Usuario(
+              controller: nameuserController,
+            ),
             SizedBox(
               height: 15.0,
             ),
-            Correo(),
+            Correo(
+              controller: emailController,
+            ),
             SizedBox(
               height: 15.0,
             ),
-            Contras(),
+            Contras(
+              controller: passwordController,
+            ),
             SizedBox(
               height: 15.0,
             ),
@@ -45,8 +87,37 @@ class PbRegistrarse extends StatelessWidget {
                   child: Text("Iniciar sesión", style: AppTipoText.texto),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, PbRegistrarse.id);
+                  onTap: () async {
+                    String email = emailController.text.trim();
+                    String password = passwordController.text.trim();
+                    String fullname = fullnameController.text;
+                    String nameuser = nameuserController.text.trim();
+
+                    if (email.isEmpty ||
+                        password.isEmpty ||
+                        fullname.isEmpty ||
+                        nameuser.isEmpty) {
+                      print('Rellena todos los campos.');
+                      return;
+                    }
+
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(email)) {
+                      print("El correo electrónico no es válido.");
+                      return;
+                    }
+
+                    String? user =
+                        await registeruser(fullname, nameuser, email, password);
+                    if (user == null) {
+                      //Si no hay error en la autenticación, navega al feed
+                      Navigator.pop(context);
+                    } else {
+                      print('Error:$user');
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(user),
+                      ));
+                    }
                   },
                   child: Text("Registrarse", style: AppTipoText.texto),
                 ),

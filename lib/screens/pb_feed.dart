@@ -5,6 +5,9 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 int _selectedIndex = 0;
 
