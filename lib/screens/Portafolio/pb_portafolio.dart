@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:photoboom/components/botonvolver.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
+import 'package:photoboom/screens/Feed/pb_feed.dart';
+import 'package:photoboom/screens/Retos/pb_retos.dart';
+import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
+import 'package:photoboom/screens/pb_camara.dart';
+import 'package:photoboom/screens/buscador/pb_buscador.dart';
+import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
+import 'package:photoboom/components/imagenesorden.dart';
 
 class PbPortafolio extends StatelessWidget {
   static String id = "pb_portafolio";
@@ -16,43 +23,122 @@ class PbPortafolio extends StatelessWidget {
               children: [
                 Logopequeno(),
                 ConfiguracionesBoton(onPressed: () {
-      // Aquí puedes navegar a la pantalla Feed
-    }),
+                  Navigator.pushNamed(context, PbAjustes.id);
+                })
               ],
             ),
-            Expanded(
+
+            /// Foto de perfil y nombre
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Column(
-                  children: [
-                    CircleAvatar(radius: 80,
-                      backgroundImage:  AssetImage('assets/img/descargar.jpeg'),
-                    )
-                  ],
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage('assets/img/descargar.jpeg'),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "nombre_usuario",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Diseñador | Fotógrafo | Artista Digital",
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                ],
               ),
             ),
-             Row(
-  crossAxisAlignment: CrossAxisAlignment.end,
-  mainAxisAlignment: MainAxisAlignment.spaceAround,
-  children: [
-    FeedBoton(onPressed: () {
-      // Aquí puedes navegar a la pantalla Feed
-    }),
-    RetosBoton(onPressed: () {
-      // Aquí puedes poner acción para retos
-    }),
-    FotosBoton(onPressed: () {
-      // Acción para fotos
-    }),
-    CorazonBoton(onPressed: () {
-      // Acción para favoritos
-    }),
-    PerfilBoton(onPressed: () {
-      // Acción para perfil
-    }),
-  ],
-),
+
+            /// Estadísticas y botón
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildStatColumn("54", "Publicaciones"),
+                  _buildStatColumn("1.2K", "Seguidores"),
+                  _buildStatColumn("300", "Seguidos"),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey[300],
+                foregroundColor: Colors.black,
+              ),
+              child: Text("Editar perfil"),
+            ),
+
+            /// Galería de imágenes
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GaleriaImagenes(
+                  imagePaths: [
+                    'assets/img/imagen4.jpeg',
+                    'assets/img/imagen2.jpeg',
+                    'assets/img/categoriasimg/imagen3.jpeg',
+                    'assets/img/imagen3.jpeg',
+                    'assets/img/imagen1.jpeg',
+                    'assets/img/categoriasimg/imagen5.jpeg',
+                    'assets/img/categoriasimg/imagen6.jpeg',
+                    'assets/img/imagen6.jpeg',
+                    'assets/img/imagen5.jpg',
+                    'assets/img/categoriasimg/imagen8.jpeg',
+                    'assets/img/categoriasimg/imagen1.jpeg',
+                    'assets/img/categoriasimg/imagen4.jpeg',
+                    'assets/img/categoriasimg/imagen7.jpeg',
+                    'assets/img/categoriasimg/imagen2.jpeg',
+                  ],
+                ),
+              ),
+            ),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                FeedBoton(onPressed: () {
+                  // Aquí puedes navegar a la pantalla Feed
+                  Navigator.pushNamed(context, PbFeed.id);
+                }),
+                RetosBoton(onPressed: () {
+                  // Aquí puedes poner acción para retos
+                  Navigator.pushNamed(context, PbRetos.id);
+                }),
+                FotosBoton(onPressed: () {
+                  Navigator.pushNamed(context, PbCamara.id);
+                }),
+                CorazonBoton(onPressed: () {
+                  // Acción para favoritos
+                  Navigator.pushNamed(context, PbBuscador.id);
+                }),
+                PerfilBoton(onPressed: () {
+                  // Acción para perfil
+                  Navigator.pushNamed(context, PbPortafolio.id);
+                }),
+              ],
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStatColumn(String number, String label) {
+    return Column(
+      children: [
+        Text(
+          number,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+        ),
+      ],
     );
   }
 }

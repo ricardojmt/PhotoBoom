@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:photoboom/components/botonvolver.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
-import 'package:photoboom/components/botonajustes.dart';
+import 'package:photoboom/components/barrabusqueda.dart';
+import 'package:photoboom/components/categorias.dart';
 import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Retos/pb_retos.dart';
 import 'package:photoboom/screens/pb_camara.dart';
 import 'package:photoboom/screens/buscador/pb_buscador.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 
-class PbAjustesSesion extends StatelessWidget {
-  static String id = "pb_ajustes_csesion";
+class PbPerfilesmenu extends StatelessWidget {
+  static String id = "pb_perfiles_menu";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,27 +19,49 @@ class PbAjustesSesion extends StatelessWidget {
         backgroundColor: AppColores.backgrounds,
         body: Column(
           children: [
-            Stack(
+            Column(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: FlechaInicio(),
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: FlechaInicio(),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Logopequeno(),
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Logopequenoajustes(),
+                BarraBusqueda(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    busquedaperfiles(),
+                    busquedaimagenes(),
+                  ],
                 ),
               ],
             ),
             Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Cerrarsesion(),
-                    Eliminarcuenta(),
-                    Desactivarcuentatemporalmente(),
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      Arquitectura(),
+                      ArteyCreatividad(),
+                      Naturaleza(),
+                      Viajes(),
+                      Personas(),
+                      ComidayBebida(),
+                      Animalesdomesticos(),
+                      Fotografianocturna(),
+                    ],
+                  ),
                 ),
               ),
             ),

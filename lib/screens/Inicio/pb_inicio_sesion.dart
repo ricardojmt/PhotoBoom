@@ -20,7 +20,8 @@ class PbInicioSesion extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<String?> signInWithEmailAndPassword(String email, String password) async {
+  Future<String?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -95,7 +96,8 @@ class PbInicioSesion extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(context, PbOlvideContrasena.id);
                     },
-                    child: Text("Olvidé mi contraseña", style: AppTipoText.textopequeno),
+                    child: Text("Olvidé mi contraseña",
+                        style: AppTipoText.textopequeno),
                   ),
                 ],
               ),
@@ -115,14 +117,16 @@ class PbInicioSesion extends StatelessWidget {
                         return;
                       }
 
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(email)) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("El correo electrónico no es válido."),
                         ));
                         return;
                       }
 
-                      String? errorMessage = await signInWithEmailAndPassword(email, password);
+                      String? errorMessage =
+                          await signInWithEmailAndPassword(email, password);
 
                       if (errorMessage == null) {
                         Navigator.pushNamed(context, PbFeed.id);

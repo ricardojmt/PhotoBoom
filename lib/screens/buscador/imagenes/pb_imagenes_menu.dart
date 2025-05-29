@@ -6,6 +6,11 @@ import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/barrabusqueda.dart';
 import 'package:photoboom/components/imagenesorden.dart';
+import 'package:photoboom/screens/Feed/pb_feed.dart';
+import 'package:photoboom/screens/Retos/pb_retos.dart';
+import 'package:photoboom/screens/pb_camara.dart';
+import 'package:photoboom/screens/buscador/pb_buscador.dart';
+import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 
 class PbImagenesmenu extends StatelessWidget {
   static String id = "pb_imagenes_menu";
@@ -23,7 +28,7 @@ class PbImagenesmenu extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topRight,
-                      child: flechainicio(),
+                      child: FlechaInicio(),
                     ),
                     Align(
                       alignment: Alignment.topCenter,
@@ -42,41 +47,6 @@ class PbImagenesmenu extends StatelessWidget {
               ],
             ),
             Expanded(
-<<<<<<< HEAD
-  child: GaleriaImagenes(
-    imagePaths: [
-      'assets/img/imagen4.jpeg',
-      'assets/img/imagen2.jpeg',
-      'assets/img/imagen3.jpeg',
-      'assets/img/imagen1.jpeg',
-      'assets/img/imagen6.jpeg',
-      'assets/img/imagen5.jpg',
-    ],
-  ),
-),
-            Row(
-  crossAxisAlignment: CrossAxisAlignment.end,
-  mainAxisAlignment: MainAxisAlignment.spaceAround,
-  children: [
-    FeedBoton(onPressed: () {
-      // Aquí puedes navegar a la pantalla Feed
-    }),
-    RetosBoton(onPressed: () {
-      // Aquí puedes poner acción para retos
-    }),
-    FotosBoton(onPressed: () {
-      // Acción para fotos
-    }),
-    CorazonBoton(onPressed: () {
-      // Acción para favoritos
-    }),
-    PerfilBoton(onPressed: () {
-      // Acción para perfil
-    }),
-  ],
-),
-
-=======
               child: GaleriaImagenes(
                 imagePaths: [
                   'assets/img/imagen4.jpeg',
@@ -88,21 +58,31 @@ class PbImagenesmenu extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  feed(),
-                  retos(),
-                  fotos(),
-                  corazon(),
-                  perfil(),
-                ],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                FeedBoton(onPressed: () {
+                  // Aquí puedes navegar a la pantalla Feed
+                  Navigator.pushNamed(context, PbFeed.id);
+                }),
+                RetosBoton(onPressed: () {
+                  // Aquí puedes poner acción para retos
+                  Navigator.pushNamed(context, PbRetos.id);
+                }),
+                FotosBoton(onPressed: () {
+                  Navigator.pushNamed(context, PbCamara.id);
+                }),
+                CorazonBoton(onPressed: () {
+                  // Acción para favoritos
+                  Navigator.pushNamed(context, PbBuscador.id);
+                }),
+                PerfilBoton(onPressed: () {
+                  // Acción para perfil
+                  Navigator.pushNamed(context, PbPortafolio.id);
+                }),
+              ],
             ),
->>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
           ],
         ),
       ),

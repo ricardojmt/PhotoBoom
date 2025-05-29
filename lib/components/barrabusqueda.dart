@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:photoboom/screens/buscador/Perfiles/pb_perfiles_menu.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_categorias.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_menu.dart';
 
-class busquedaperfiles extends StatelessWidget{
-  Widget build (BuildContext context){
+class busquedaperfiles extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Busquedaopciones(
       texto: 'Perfiles',
       whidth: 0.45,
@@ -14,12 +15,13 @@ class busquedaperfiles extends StatelessWidget{
       colorselec: const Color(0xFF4E4F50),
       colortexto: const Color(0xFF000000),
       colorselectexto: const Color(0xFFFFFFFF),
+      cambio: PbPerfilesmenu.id,
     );
   }
 }
 
-class busquedaimagenes extends StatelessWidget{
-  Widget build (BuildContext context){
+class busquedaimagenes extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Busquedaopciones(
       texto: 'Imagenes',
       whidth: 0.45,
@@ -35,9 +37,8 @@ class busquedaimagenes extends StatelessWidget{
   }
 }
 
-
-class imagenescategorias extends StatelessWidget{
-  Widget build (BuildContext context){
+class imagenescategorias extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Busquedaopciones(
       texto: 'Categorías',
       whidth: 0.40,
@@ -53,8 +54,8 @@ class imagenescategorias extends StatelessWidget{
   }
 }
 
-class imagenescategoriaseleccionada extends StatelessWidget{
-  Widget build (BuildContext context){
+class imagenescategoriaseleccionada extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Busquedaopciones(
       texto: 'Categorías',
       whidth: 0.40,
@@ -69,8 +70,8 @@ class imagenescategoriaseleccionada extends StatelessWidget{
   }
 }
 
-class imagenestendencia extends StatelessWidget{
-  Widget build (BuildContext context){
+class imagenestendencia extends StatelessWidget {
+  Widget build(BuildContext context) {
     return Busquedaopciones(
       texto: 'Tendencias',
       whidth: 0.40,
@@ -86,13 +87,28 @@ class imagenestendencia extends StatelessWidget{
   }
 }
 
-
+class perfileseleccionado extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Busquedaopciones(
+      texto: 'Perfiles',
+      whidth: 0.40,
+      height: 0.08,
+      alignment: Alignment.topCenter,
+      fontSize: 18,
+      colorBoton: const Color(0xFFFF0000),
+      colorselec: const Color(0xFFFF0000),
+      colortexto: const Color(0xFFFFFFFF),
+      colorselectexto: const Color(0xFFFFFFFF),
+    );
+  }
+}
 
 class BarraBusqueda extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
 
-  const BarraBusqueda({Key? key, this.controller, this.onChanged}) : super(key: key);
+  const BarraBusqueda({Key? key, this.controller, this.onChanged})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +198,9 @@ class _busquesdaopcionesState extends State<Busquedaopciones> {
             margin: EdgeInsets.symmetric(vertical: 10),
             padding: EdgeInsets.symmetric(horizontal: 0.5),
             decoration: BoxDecoration(
-              color: _isHovering ? widget.colorselec : widget.colorBoton, // Cambia color si está hover
+              color: _isHovering
+                  ? widget.colorselec
+                  : widget.colorBoton, // Cambia color si está hover
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -197,7 +215,8 @@ class _busquesdaopcionesState extends State<Busquedaopciones> {
                 widget.texto,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: _isHovering ? widget.colorselectexto : widget.colortexto,
+                  color:
+                      _isHovering ? widget.colorselectexto : widget.colortexto,
                   fontFamily: 'KaushanScript',
                   fontSize: widget.fontSize,
                   fontWeight: FontWeight.bold,

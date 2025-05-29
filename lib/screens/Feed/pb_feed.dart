@@ -7,11 +7,14 @@ import 'package:photoboom/core/app_colores.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 import 'package:photoboom/screens/Retos/pb_retos.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:camera/camera.dart';
 import 'dart:typed_data';
+
+import 'package:photoboom/screens/buscador/pb_buscador.dart';
 
 int _selectedIndex = 0;
 
@@ -261,60 +264,18 @@ class _PbFeedState extends State<PbFeed> {
         backgroundColor: AppColores.backgrounds,
         body: Column(
           // Main Column encapsulando todo
-<<<<<<< HEAD
           children: [
             Padding(
-  padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-  child: Column(
-    children: [
-      Row(
-        children: [
-          flechainicio(),
-          Logopequeno(),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Logopequeno(),
-        ],
-      ),
-    ],
-  ),
-),
-=======
-         children: [
-  Padding(
-    padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-    child: Row(
-      children: [
-        Flechainicio(),
-        Logopequeno(),
-      ],
-    ),
-  ),
-  Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Logopequeno(),
-    ],
-  ),
-],
-
-            
->>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Textoco(),
-                    Textola(),
-                    SizedBox(height: 15.0),
-                    Correo(),
-                    SizedBox(height: 15.0),
-                  ],
-                ),
+              padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      FlechaInicio(),
+                      Logopequeno(),
+                    ],
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -327,7 +288,8 @@ class _PbFeedState extends State<PbFeed> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  FeedBoton(onPressed: () => setState(() => _selectedIndex = 0)),
+                  FeedBoton(
+                      onPressed: () => setState(() => _selectedIndex = 0)),
                   RetosBoton(onPressed: () {
                     // Esta es la navegación a la pantalla de publicación de retos
                     Navigator.pushNamed(context, PbRetos.id);
@@ -350,14 +312,14 @@ class _PbFeedState extends State<PbFeed> {
                   CorazonBoton(onPressed: () {
                     if (mounted) {
                       // <--- Añadir verificación mounted
-                      setState(() => _selectedIndex = 3);
+                      Navigator.pushNamed(context, PbBuscador.id);
                     }
                     _stopCamera(); // Detener cámara al cambiar de pestaña
                   }),
                   PerfilBoton(onPressed: () {
                     if (mounted) {
                       // <--- Añadir verificación mounted
-                      setState(() => _selectedIndex = 4);
+                      Navigator.pushNamed(context, PbPortafolio.id);
                     }
                     _stopCamera(); // Detener cámara al cambiar de pestaña
                   }),

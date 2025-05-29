@@ -57,9 +57,12 @@ class MainApp extends StatelessWidget {
         PbAjustes.id: (context) => PbAjustes(),
         PbAjustesCuenta.id: (context) => PbAjustesCuenta(),
         PbAjustesNotificaciones.id: (context) => PbAjustesNotificaciones(),
-        PbAjustesPrivacidadYSeguridad.id: (context) => PbAjustesPrivacidadYSeguridad(),
-        PbAjustesCentroDeAyudaYSoporte.id: (context) => PbAjustesCentroDeAyudaYSoporte(),
-        PbAjustesFuncionesExperimentalesOBeta.id: (context) => PbAjustesFuncionesExperimentalesOBeta(),
+        PbAjustesPrivacidadYSeguridad.id: (context) =>
+            PbAjustesPrivacidadYSeguridad(),
+        PbAjustesCentroDeAyudaYSoporte.id: (context) =>
+            PbAjustesCentroDeAyudaYSoporte(),
+        PbAjustesFuncionesExperimentalesOBeta.id: (context) =>
+            PbAjustesFuncionesExperimentalesOBeta(),
         PbAjustesSesion.id: (context) => PbAjustesSesion(),
         //Buscador
         PbBuscador.id: (context) => PbBuscador(),

@@ -45,14 +45,10 @@ flutter:
   assets:
     - assets/img/
     - assets/img/categoriasimg/
-<<<<<<< HEAD
-    - assets/images/
-=======
     - assets/images/imagen1.jpg
     - assets/images/imagen2.jpg
     - assets/images/imagen3.jpg
     - assets/images/imagen4.jpg
->>>>>>> 65fe3735bfeeaff7eb95da1e5de51afcba15ca13
 
   fonts:
     - family: KaushanScript
