@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:camera/camera.dart';
 import 'dart:typed_data';
+import 'package:photoboom/screens/Retos/pb_retos.dart';
 
 class Feed extends StatefulWidget {
   static const String id = '/feed';
@@ -23,14 +24,20 @@ class _FeedState extends State<Feed> {
   bool _isCameraActive = false;
 
   Future<void> _initializeCamera() async {
-    _cameras = await availableCameras();
-    if (_cameras.isNotEmpty) {
-      _cameraController = CameraController(_cameras[0], ResolutionPreset.high);
-      await _cameraController!.initialize();
-      setState(() {
-        _isCameraInitialized = true;
-        _isCameraActive = true;
-      });
+    try {
+      _cameras = await availableCameras();
+      if (_cameras.isNotEmpty) {
+        _cameraController = CameraController(_cameras[0], ResolutionPreset.high);
+        await _cameraController!.initialize();
+        setState(() {
+          _isCameraInitialized = true;
+          _isCameraActive = true;
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al inicializar la cámara: $e')),
+      );
     }
   }
 
@@ -51,58 +58,89 @@ class _FeedState extends State<Feed> {
           _isCameraActive = false;
         });
       }
+      await _stopCamera();
     } catch (e) {
       print("Error al tomar la foto: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al tomar la foto: $e')),
+      );
     }
   }
 
+  Future<void> _stopCamera() async {
+    await _cameraController?.dispose();
+    _cameraController = null;
+    setState(() {
+      _isCameraInitialized = false;
+      _isCameraActive = false;
+    });
+  }
+
   Future<void> _pickImage() async {
-    if (kIsWeb || !Platform.isAndroid && !Platform.isIOS) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-      );
-      if (result != null) {
-        setState(() {
-          _webImageData = result.files.single.bytes;
-          _image = null;
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("No se seleccionó ninguna imagen")),
+    try {
+      if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.image,
         );
-      }
-    } else {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        if (pickedFile != null) {
-          _image = pickedFile;
-          _webImageData = null;
+        if (result != null) {
+          setState(() {
+            _webImageData = result.files.single.bytes;
+            _image = null;
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("No se seleccionó ninguna imagen")),
           );
         }
-      });
+      } else {
+        final ImagePicker _picker = ImagePicker();
+        final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          setState(() {
+            _image = pickedFile;
+            _webImageData = null;
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("No se seleccionó ninguna imagen")),
+          );
+        }
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al seleccionar imagen: $e")),
+      );
     }
   }
 
   Future<void> _openCamera() async {
-    if (kIsWeb || !Platform.isAndroid && !Platform.isIOS) {
-      await _initializeCamera();
-    } else {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
-      setState(() {
+    try {
+      if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
+        if (!_isCameraInitialized) {
+          await _initializeCamera();
+        } else {
+          setState(() {
+            _isCameraActive = true;
+          });
+        }
+      } else {
+        final ImagePicker _picker = ImagePicker();
+        final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
         if (pickedFile != null) {
-          _image = pickedFile;
-          _webImageData = null;
+          setState(() {
+            _image = pickedFile;
+            _webImageData = null;
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("No se tomó ninguna foto")),
           );
         }
-      });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al abrir cámara: $e")),
+      );
     }
   }
 
@@ -150,7 +188,6 @@ class _FeedState extends State<Feed> {
                           height: 400.0,
                           fit: BoxFit.cover,
                         ),
-
           _isCameraInitialized && _isCameraActive
               ? Positioned(
                   bottom: 50.0,
@@ -168,7 +205,6 @@ class _FeedState extends State<Feed> {
                   ),
                 )
               : Container(),
-
           !_isCameraActive
               ? Positioned(
                   bottom: 100.0,
@@ -195,7 +231,12 @@ class _FeedState extends State<Feed> {
                           color: Colors.red,
                           size: 36.0,
                         ),
-                        onPressed: _pickImage, // ahora este botón selecciona imagen
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const PbRetos()),
+                          );
+                        },
                       ),
                       IconButton(
                         icon: Icon(
@@ -225,7 +266,6 @@ class _FeedState extends State<Feed> {
                         ),
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-
                             SnackBar(content: Text('Perfil clickeado')),
                           );
                         },
