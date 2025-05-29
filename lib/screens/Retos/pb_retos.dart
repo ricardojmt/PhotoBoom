@@ -30,9 +30,33 @@ class _PbRetosState extends State<PbRetos> {
   }
 
   // --- MÉTODOS ASÍNCRONOS Y AUXILIARES ---
+  Future<void> _requestCameraPermission() async {
+    // Verifica el estado del permiso de la cámara
+    var status = await Permission.camera.status;
+
+    if (status.isGranted) {
+      print("Permiso otorgado");
+      // Puedes inicializar la cámara aquí
+    } else if (status.isDenied) {
+      // Solicita el permiso al usuario
+      status = await Permission.camera.request();
+
+      if (status.isGranted) {
+        print("Permiso otorgado después de la solicitud");
+        // Inicializa la cámara aquí
+      } else if (status.isPermanentlyDenied) {
+        print("Permiso denegado permanentemente");
+        // Redirige al usuario a la configuración para habilitar el permiso
+        openAppSettings();
+      }
+    } else if (status.isRestricted) {
+      print("El permiso está restringido");
+    }
+  }
 
   Future<void> _initializeCamera() async {
     // 1. Solicitar y verificar permisos
+    await _requestCameraPermission();
     var cameraStatus = await Permission.camera.status;
     var microphoneStatus =
         await Permission.microphone.status; // Si grabas video con audio
@@ -68,6 +92,7 @@ class _PbRetosState extends State<PbRetos> {
       if (_cameras.isEmpty) {
         try {
           _cameras = await availableCameras();
+          print('Camaras disponibles: $_cameras');
         } on CameraException catch (e) {
           if (mounted) {
             _mostrarError(
@@ -98,9 +123,11 @@ class _PbRetosState extends State<PbRetos> {
           _cameraController =
               CameraController(_cameras[0], ResolutionPreset.medium);
           await _cameraController!.initialize();
+          print('Camara inicializada con éxito');
           if (mounted) {
             setState(() {
               _isCameraInitialized = true;
+
               _isCameraActive = true;
             });
           }
@@ -120,6 +147,7 @@ class _PbRetosState extends State<PbRetos> {
         } catch (e) {
           if (mounted) {
             _mostrarError('Error inesperado al inicializar la cámara: $e');
+            print('Error al iniciar la cámara: $e');
           }
         }
       } else {

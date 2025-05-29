@@ -13,6 +13,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:camera/camera.dart';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 int _selectedIndex = 0;
 
@@ -31,17 +32,25 @@ class _PbFeedState extends State<PbFeed> {
   bool _isCameraInitialized = false;
   bool _isCameraActive = false;
 
+  // NUEVO: Lista para almacenar las publicaciones (solo para demostración, se cargará de Firebase)
+  final List<Map<String, dynamic>> _posts = [];
+  // NUEVO: Para el usuario actual (ejemplo)
+  String _currentUser =
+      "MiUsuario"; // Reemplaza con lógica de autenticación real
+
   @override
   void initState() {
     super.initState();
+    _loadPosts();
   }
 
   Future<void> _initializeCamera() async {
     try {
+      if (!mounted) return; // Doble verificación por si acaso
       _cameras = await availableCameras();
       if (_cameras.isNotEmpty) {
         _cameraController =
-            CameraController(_cameras[0], ResolutionPreset.high);
+            CameraController(_cameras[1], ResolutionPreset.high);
         await _cameraController!.initialize();
         if (mounted) {
           // <--- Añadir verificación mounted
@@ -68,6 +77,14 @@ class _PbFeedState extends State<PbFeed> {
                   'Error al inicializar la cámara: ${e.description}')), // Usa description para CameraException
         );
       }
+      _cameraController?.dispose(); // Asegurarse de liberar en caso de error
+      _cameraController = null;
+      if (mounted) {
+        setState(() {
+          _isCameraInitialized = false;
+          _isCameraActive = false;
+        });
+      }
     } catch (e) {
       if (mounted) {
         // <--- Añadir verificación mounted
@@ -75,6 +92,14 @@ class _PbFeedState extends State<PbFeed> {
           SnackBar(
               content: Text('Error inesperado al inicializar la cámara: $e')),
         );
+      }
+      _cameraController?.dispose();
+      _cameraController = null;
+      if (mounted) {
+        setState(() {
+          _isCameraInitialized = false;
+          _isCameraActive = false;
+        });
       }
     }
   }
@@ -95,6 +120,7 @@ class _PbFeedState extends State<PbFeed> {
     }
     try {
       final XFile file = await _cameraController!.takePicture();
+      await _stopCamera(); // Detener la cámara inmediatamente después de tomar la foto
       if (kIsWeb) {
         final bytes = await file.readAsBytes();
         if (mounted) {
@@ -105,6 +131,8 @@ class _PbFeedState extends State<PbFeed> {
             _isCameraActive = false; // Desactivar la vista de la cámara
           });
         }
+        await _uploadImageToFirebase(bytes,
+            isWeb: true); // Subir la foto a Firebase
       } else {
         if (mounted) {
           // <--- Añadir verificación mounted
@@ -114,8 +142,10 @@ class _PbFeedState extends State<PbFeed> {
             _isCameraActive = false; // Desactivar la vista de la cámara
           });
         }
+        await _uploadImageToFirebase(File(file.path),
+            isWeb: false); // Subir la foto a Firebase
       }
-      await _stopCamera(); // Detener el controlador de la cámara
+      //await _stopCamera(); // Detener el controlador de la cámara
     } catch (e) {
       print("Error al tomar la foto: $e");
       if (mounted) {
@@ -128,10 +158,10 @@ class _PbFeedState extends State<PbFeed> {
   }
 
   Future<void> _stopCamera() async {
-    if (_cameraController != null) {
+    if (_cameraController != null && _cameraController!.value.isInitialized) {
       await _cameraController!.dispose();
-      _cameraController = null;
     }
+    _cameraController = null;
     if (mounted) {
       // <--- Añadir verificación mounted
       setState(() {
@@ -145,6 +175,7 @@ class _PbFeedState extends State<PbFeed> {
     await _stopCamera(); // Detener la cámara si está activa, antes de abrir la galería
 
     try {
+      if (mounted) return;
       if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           type: FileType.image,
@@ -157,6 +188,8 @@ class _PbFeedState extends State<PbFeed> {
               _image = null;
             });
           }
+          await _uploadImageToFirebase(result.files.single.bytes!,
+              isWeb: true); // Subir a Firebase
         } else {
           if (mounted) {
             // <--- Añadir verificación mounted
@@ -177,6 +210,8 @@ class _PbFeedState extends State<PbFeed> {
               _webImageData = null;
             });
           }
+          await _uploadImageToFirebase(File(pickedFile.path),
+              isWeb: false); // Subir a Firebase
         } else {
           if (mounted) {
             // <--- Añadir verificación mounted
@@ -201,15 +236,15 @@ class _PbFeedState extends State<PbFeed> {
     if (_isCameraInitialized && _isCameraActive) {
       return;
     }
-
+    if (mounted) return;
     // Si hay una imagen seleccionada, la reseteamos al abrir la cámara
-    if (mounted) {
-      // <--- Añadir verificación mounted
-      setState(() {
-        _image = null;
-        _webImageData = null;
-      });
-    }
+    //if (mounted) {
+    // <--- Añadir verificación mounted
+    setState(() {
+      _image = null;
+      _webImageData = null;
+    });
+    //}
 
     // Si es web o escritorio, inicializamos y mostramos la vista previa de la cámara.
     // En móvil, ImagePicker maneja la apertura de la cámara como una actividad separada.
@@ -229,6 +264,8 @@ class _PbFeedState extends State<PbFeed> {
               _isCameraActive = false; // La cámara de ImagePicker cierra sola
             });
           }
+          await _uploadImageToFirebase(File(pickedFile.path),
+              isWeb: false); // Subir a Firebase
         } else {
           if (mounted) {
             // <--- Añadir verificación mounted
@@ -249,80 +286,159 @@ class _PbFeedState extends State<PbFeed> {
     }
   }
 
-  @override
-  void dispose() {
-    _stopCamera(); // Detener la cámara y liberar recursos al salir del widget
-    super.dispose();
+  Future<void> _uploadImageToFirebase(dynamic fileData,
+      {required bool isWeb}) async {
+    if (mounted) return;
+    try {
+      String fileName = 'posts/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask;
+      if (isWeb) {
+        uploadTask = storageRef.putData(fileData as Uint8List);
+      } else {
+        uploadTask = storageRef.putFile(fileData as File);
+      }
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      print("Imagen subida a Firebase Storage: $downloadUrl");
+      await FirebaseFirestore.instance.collection('posts').add({
+        'imageUrl': downloadUrl,
+        'userName': _currentUser, // Usar el nombre de usuario actual
+        'likes': 0,
+        'comments': 0,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Foto subida y publicada con éxito!')),
+        );
+        _loadPosts(); // Volver a cargar las publicaciones para actualizar el feed
+      }
+    } catch (e) {
+      print("Error al subir la imagen a Firebase: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al subir la imagen: $e')),
+        );
+      }
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColores.backgrounds,
-        body: Column(
-          // Main Column encapsulando todo
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-              child: Row(
-                children: [
-                  Flechainicio(),
-                  Logopequeno(),
-                ],
+  Future<void> _loadPosts() async {
+    if (!mounted) return;
+    try {
+      final postsSnapshot = await FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy('timestamp',
+              descending: true) // Ordenar por fecha de creación
+          .get();
+
+      List<Map<String, dynamic>> loadedPosts = [];
+      for (var doc in postsSnapshot.docs) {
+        loadedPosts.add({
+          'imageUrl': doc['imageUrl'],
+          'userName': doc['userName'],
+          'likes': doc['likes'] ?? 0, // Por si no tienen likes todavía
+          'comments': doc['comments'] ?? 0, // Por si no tienen comments todavía
+        });
+      }
+      if (mounted) {
+        setState(() {
+          _posts.clear(); // Limpiar las publicaciones existentes
+          _posts.addAll(loadedPosts); // Añadir las nuevas publicaciones
+        });
+      }
+    } catch (e) {
+      print("Error al cargar las publicaciones: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al cargar publicaciones: $e')),
+        );
+      }
+    }
+    @override
+    void dispose() {
+      // Dispose directo y síncrono del controlador de la cámara
+      if (_cameraController != null && _cameraController!.value.isInitialized) {
+        _cameraController!.dispose();
+      }
+      _cameraController = null;
+      // Las banderas se pueden resetear, no necesitan setState ya que el widget se destruye
+      _isCameraInitialized = false;
+      _isCameraActive = false;
+      super.dispose();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: AppColores.backgrounds,
+          body: Column(
+            // Main Column encapsulando todo
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+                child: Row(
+                  children: [
+                    Flechainicio(),
+                    Logopequeno(),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child:
-                  elegirboton(), // Aquí se renderiza el contenido de la pestaña
-            ),
-            // Barra de navegación inferior
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Feed(onPressed: () => setState(() => _selectedIndex = 0)),
-                  Retos(onPressed: () {
-                    // Esta es la navegación a la pantalla de publicación de retos
-                    Navigator.pushNamed(context, PbRetos.id);
-                  }),
-                  Fotos(onPressed: () {
-                    // Cuando se presiona el botón 'Fotos', cambiamos la pestaña a 2
-                    // y limpiamos cualquier estado de cámara/imagen previo
-                    if (mounted) {
-                      // <--- Añadir verificación mounted
-                      setState(() {
-                        _selectedIndex = 2;
-                        _image = null;
-                        _webImageData = null;
-                        _isCameraActive =
-                            false; // Asegurarse de que la cámara no esté activa si no la queremos iniciar
-                      });
-                    }
-                    _stopCamera(); // Asegurarse de detener la cámara si está activa
-                  }),
-                  Corazon(onPressed: () {
-                    if (mounted) {
-                      // <--- Añadir verificación mounted
-                      setState(() => _selectedIndex = 3);
-                    }
-                    _stopCamera(); // Detener cámara al cambiar de pestaña
-                  }),
-                  Perfil(onPressed: () {
-                    if (mounted) {
-                      // <--- Añadir verificación mounted
-                      setState(() => _selectedIndex = 4);
-                    }
-                    _stopCamera(); // Detener cámara al cambiar de pestaña
-                  }),
-                ],
+              Expanded(
+                child:
+                    elegirboton(), // Aquí se renderiza el contenido de la pestaña
               ),
-            ),
-          ],
+              // Barra de navegación inferior
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Feed(onPressed: () => setState(() => _selectedIndex = 0)),
+                    Retos(onPressed: () {
+                      // Esta es la navegación a la pantalla de publicación de retos
+                      Navigator.pushNamed(context, PbRetos.id);
+                    }),
+                    Fotos(onPressed: () {
+                      // Cuando se presiona el botón 'Fotos', cambiamos la pestaña a 2
+                      // y limpiamos cualquier estado de cámara/imagen previo
+                      if (mounted) {
+                        // <--- Añadir verificación mounted
+                        setState(() {
+                          _selectedIndex = 2;
+                          _image = null;
+                          _webImageData = null;
+                          _isCameraActive =
+                              false; // Asegurarse de que la cámara no esté activa si no la queremos iniciar
+                        });
+                      }
+                      _stopCamera(); // Asegurarse de detener la cámara si está activa
+                    }),
+                    Corazon(onPressed: () {
+                      if (mounted) {
+                        // <--- Añadir verificación mounted
+                        setState(() => _selectedIndex = 3);
+                      }
+                      _stopCamera(); // Detener cámara al cambiar de pestaña
+                    }),
+                    Perfil(onPressed: () {
+                      if (mounted) {
+                        // <--- Añadir verificación mounted
+                        setState(() => _selectedIndex = 4);
+                      }
+                      _stopCamera(); // Detener cámara al cambiar de pestaña
+                    }),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget elegirboton() {
@@ -424,105 +540,130 @@ class _PbFeedState extends State<PbFeed> {
         return paginaprincipal(); // Página predeterminada
     }
   }
-}
 
-Widget buildImageItem(BuildContext context, String imagePath, String userName,
-    int likes, int comments) {
-  return Container(
-    width: 300,
-    alignment: Alignment.center,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment:
-          MainAxisAlignment.center, // ← Esto alinea todo a la izquierda
-      children: [
-        // Nombre del usuario con su avatar
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 12,
-              ),
-              SizedBox(width: 8),
-              Text(
-                userName,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // Imagen con borde
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          margin: EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(19),
-            border: Border.all(color: Colors.redAccent, width: 2),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              imagePath,
-              height: 300,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-
-        // Likes y comentarios
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            children: [
-              Icon(Icons.favorite, color: Colors.red),
-              SizedBox(width: 4),
-              Text('$likes Likes'),
-              SizedBox(width: 16),
-              Icon(Icons.comment, color: Colors.red),
-              SizedBox(width: 4),
-              Text('$comments Comments'),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-      ],
-    ),
-  );
-}
-
-Widget paginaprincipal() {
-  return ListView.builder(
-    padding: EdgeInsets.all(16),
-    itemCount: 4,
-    itemBuilder: (context, index) {
-      final imagenes = [
-        'assets/images/imagen1.jpg',
-        'assets/images/imagen2.jpg',
-        'assets/images/imagen3.jpg',
-        'assets/images/imagen4.jpg',
-      ];
-      final usuarios = ['RicardoMT', 'YessTriana', 'AlbertoAl', 'SergioC'];
-      final likes = [120, 89, 45, 230];
-      final comments = [12, 5, 8, 14];
+  Widget paginaprincipal() {
+    if (_posts.isEmpty) {
       return Center(
-        child: buildImageItem(
-          context,
-          imagenes[index], //llamar al vector imagenes
-          usuarios[index],
-          likes[index],
-          comments[index],
+        child: Text(
+          'No hay publicaciones aún',
+          style: TextStyle(fontSize: 18, color: Colors.grey),
+          textAlign: TextAlign.center,
         ),
       );
-    },
-  );
+    }
+    return ListView.builder(
+        padding: EdgeInsets.all(16),
+        itemCount: _posts.length,
+        itemBuilder: (context, index) {
+          final post = _posts[index];
+          return Center(
+              child: buildImageItem(
+            context,
+            post['imageUrl'],
+            post['userName'],
+            post['likes'],
+            post['comments'],
+            isNetworkImage: true,
+          ));
+        });
+  }
+
+  Widget buildImageItem(BuildContext context, String imagePathorUrl,
+      String userName, int likes, int comments,
+      {bool isNetworkImage = false}) {
+    return Container(
+      width: 300,
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment:
+            MainAxisAlignment.center, // ← Esto alinea todo a la izquierda
+        children: [
+          // Nombre del usuario con su avatar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 12,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  userName,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Imagen con borde
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(19),
+              border: Border.all(color: Colors.redAccent, width: 2),
+            ),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: isNetworkImage
+                    ? Image.network(
+                        imagePathorUrl,
+                        height: 300,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return SizedBox(
+                            height: 300,
+                            width: double.infinity,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, StackTrace) =>
+                            const Icon(Icons.error),
+                      )
+                    : Image.asset(
+                        imagePathorUrl,
+                        height: 300,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )),
+          ),
+
+          // Likes y comentarios
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                Icon(Icons.favorite, color: Colors.red),
+                SizedBox(width: 4),
+                Text('$likes Likes'),
+                SizedBox(width: 16),
+                Icon(Icons.comment, color: Colors.red),
+                SizedBox(width: 4),
+                Text('$comments Comments'),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 Widget retos(BuildContext context) {
