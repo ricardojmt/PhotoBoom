@@ -27,7 +27,8 @@ class _FeedState extends State<Feed> {
     try {
       _cameras = await availableCameras();
       if (_cameras.isNotEmpty) {
-        _cameraController = CameraController(_cameras[0], ResolutionPreset.high);
+        _cameraController =
+            CameraController(_cameras[0], ResolutionPreset.high);
         await _cameraController!.initialize();
         setState(() {
           _isCameraInitialized = true;
@@ -94,7 +95,8 @@ class _FeedState extends State<Feed> {
         }
       } else {
         final ImagePicker _picker = ImagePicker();
-        final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+        final XFile? pickedFile =
+            await _picker.pickImage(source: ImageSource.gallery);
         if (pickedFile != null) {
           setState(() {
             _image = pickedFile;
@@ -125,7 +127,8 @@ class _FeedState extends State<Feed> {
         }
       } else {
         final ImagePicker _picker = ImagePicker();
-        final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+        final XFile? pickedFile =
+            await _picker.pickImage(source: ImageSource.camera);
         if (pickedFile != null) {
           setState(() {
             _image = pickedFile;
@@ -234,7 +237,8 @@ class _FeedState extends State<Feed> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const PbRetos()),
+                            MaterialPageRoute(
+                                builder: (context) => const PbRetos()),
                           );
                         },
                       ),
