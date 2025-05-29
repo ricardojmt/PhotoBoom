@@ -4,8 +4,8 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/botonajustes.dart';
 
-class PbAjustes extends StatelessWidget {
-  static String id = "pb_ajustes";
+class PbAjustesNotificaciones extends StatelessWidget {
+  static String id = "pb_ajustes_notificaciones";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,12 +30,10 @@ class PbAjustes extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Cuenta(),
-                    Notificaciones(),
-                    PrivacidadySeguridad(),
-                    Centrodeayudaysoporte(),
-                    Funcionesexperimentalesobeta(),
-                    Sesion(),
+                    LikesComentariosSeguidores(),
+                    EmailySMS(),
+                    Actividaddeamigos(),
+                    Recordatorios(),
                   ],
                 ),
               ),
