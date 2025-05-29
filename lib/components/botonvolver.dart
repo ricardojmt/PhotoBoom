@@ -5,13 +5,11 @@ import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
 import 'package:photoboom/screens/buscador/pb_buscador.dart';
-import 'package:photoboom/screens/pb_camara.dart';
 
-class Flechainicio extends StatelessWidget {
+class FlechaInicio extends StatelessWidget {
   @override
-class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Botonvolver(
+    return BotonVolver(
       alignment: Alignment.topLeft,
       icon: Icons.arrow_back,
       color: AppColores.fristtext,
@@ -19,10 +17,10 @@ class flechainicio extends StatelessWidget {
   }
 }
 
-class Feed extends StatelessWidget {
+class FeedBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const Feed({required this.onPressed});
+  const FeedBoton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +28,18 @@ class Feed extends StatelessWidget {
       icon: Icons.remove_red_eye,
       color: AppColores.logotext,
       onPressed: onPressed,
-class feed extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
-      icon: Icons.remove_red_eye,
-      color: AppColores.logotext,
-      cambio: PbFeed.id,
     );
   }
 }
 
-class Retos extends StatelessWidget {
+class RetosBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const Retos({required this.onPressed});
+  const RetosBoton({required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return BotonIcono(
-class retos extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
       icon: Icons.fiber_new_rounded,
       color: AppColores.logotext,
       onPressed: onPressed,
@@ -57,10 +47,10 @@ class retos extends StatelessWidget {
   }
 }
 
-class Fotos extends StatelessWidget {
+class FotosBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const Fotos({required this.onPressed});
+  const FotosBoton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +58,14 @@ class Fotos extends StatelessWidget {
       icon: Icons.camera_alt_rounded,
       color: AppColores.logotext,
       onPressed: onPressed,
-class fotos extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
-      icon: Icons.camera_alt_rounded,
-      color: AppColores.logotext,
-      cambio: PbCamara.id,
     );
   }
 }
 
-class Corazon extends StatelessWidget {
+class CorazonBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const Corazon({required this.onPressed});
+  const CorazonBoton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -89,20 +73,14 @@ class Corazon extends StatelessWidget {
       icon: Icons.favorite,
       color: AppColores.logotext,
       onPressed: onPressed,
-class corazon extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
-      icon: Icons.heart_broken_sharp,
-      color: AppColores.logotext,
-      cambio: PbBuscador.id,
     );
   }
 }
 
-class Perfil extends StatelessWidget {
+class PerfilBoton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const Perfil({required this.onPressed});
+  const PerfilBoton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -110,40 +88,52 @@ class Perfil extends StatelessWidget {
       icon: Icons.person,
       color: AppColores.logotext,
       onPressed: onPressed,
-class perfil extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
-      icon: Icons.person,
-      color: AppColores.logotext,
-      cambio: PbPortafolio.id,
     );
   }
 }
 
-class configuraciones extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Botonvolver(
-      alignment: Alignment.topRight,
-      icon: Icons.build_circle_rounded,
-      color: AppColores.logotext,
-      cambio: PbAjustes.id,
-    );
-  }
-}
+class ConfiguracionesBoton extends StatelessWidget {
+  final VoidCallback onPressed;
 
-class Botonvolver extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-
-  const Botonvolver({required this.icon, required this.color});
+  const ConfiguracionesBoton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon, color: color),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+    return BotonIcono(
+      icon: Icons.build_circle_rounded,
+      color: AppColores.logotext,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class BotonVolver extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final String? cambio;
+  final Alignment alignment;
+
+  const BotonVolver({
+    required this.icon,
+    required this.color,
+    this.cambio,
+    this.alignment = Alignment.center,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: alignment,
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: () {
+          if (cambio != null) {
+            Navigator.pushNamed(context, cambio!);
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      ),
     );
   }
 }
@@ -162,35 +152,10 @@ class BotonIcono extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomCenter, // Puedes cambiar esto según necesidad
+      alignment: Alignment.bottomCenter,
       child: IconButton(
         icon: Icon(icon, color: color),
         onPressed: onPressed,
-  final IconData? icon;
-  final Color? color;
-  final String? cambio;
-  final Alignment? alignment;
-
-  const Botonvolver({
-    this.icon,
-    this.color,
-    this.cambio,
-    this.alignment,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment ?? Alignment.center,
-      child: IconButton(
-        icon: Icon(icon, color: color),
-        onPressed: () {
-          if (cambio != null) {
-            Navigator.pushNamed(context, cambio!);
-          } else {
-            Navigator.pop(context);
-          }
-        }
       ),
     );
   }

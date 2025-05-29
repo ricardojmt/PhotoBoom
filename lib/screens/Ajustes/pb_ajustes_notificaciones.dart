@@ -39,16 +39,27 @@ class PbAjustesNotificaciones extends StatelessWidget {
               ),
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                feed(),
-                retos(),
-                fotos(),
-                corazon(),
-                perfil(),
-              ],
-            ),
+  crossAxisAlignment: CrossAxisAlignment.end,
+  mainAxisAlignment: MainAxisAlignment.spaceAround,
+  children: [
+    FeedBoton(onPressed: () {
+      // Aquí puedes navegar a la pantalla Feed
+    }),
+    RetosBoton(onPressed: () {
+      // Aquí puedes poner acción para retos
+    }),
+    FotosBoton(onPressed: () {
+      // Acción para fotos
+    }),
+    CorazonBoton(onPressed: () {
+      // Acción para favoritos
+    }),
+    PerfilBoton(onPressed: () {
+      // Acción para perfil
+    }),
+  ],
+),
+
           ],
         ),
       ),

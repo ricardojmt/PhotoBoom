@@ -263,19 +263,24 @@ class _PbFeedState extends State<PbFeed> {
           // Main Column encapsulando todo
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-              child: Row(
-                children: [
-                  Flechainicio(),
-                  Logopequeno(),
-                ],
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Logopequeno(),
-              ],
-            ),
-            
+  padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+  child: Column(
+    children: [
+      Row(
+        children: [
+          flechainicio(),
+          Logopequeno(),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Logopequeno(),
+        ],
+      ),
+    ],
+  ),
+),
             Expanded(
               child: Center(
                 child: Column(
@@ -300,12 +305,12 @@ class _PbFeedState extends State<PbFeed> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Feed(onPressed: () => setState(() => _selectedIndex = 0)),
-                  Retos(onPressed: () {
+                  FeedBoton(onPressed: () => setState(() => _selectedIndex = 0)),
+                  RetosBoton(onPressed: () {
                     // Esta es la navegación a la pantalla de publicación de retos
                     Navigator.pushNamed(context, PbRetos.id);
                   }),
-                  Fotos(onPressed: () {
+                  FotosBoton(onPressed: () {
                     // Cuando se presiona el botón 'Fotos', cambiamos la pestaña a 2
                     // y limpiamos cualquier estado de cámara/imagen previo
                     if (mounted) {
@@ -320,14 +325,14 @@ class _PbFeedState extends State<PbFeed> {
                     }
                     _stopCamera(); // Asegurarse de detener la cámara si está activa
                   }),
-                  Corazon(onPressed: () {
+                  CorazonBoton(onPressed: () {
                     if (mounted) {
                       // <--- Añadir verificación mounted
                       setState(() => _selectedIndex = 3);
                     }
                     _stopCamera(); // Detener cámara al cambiar de pestaña
                   }),
-                  Perfil(onPressed: () {
+                  PerfilBoton(onPressed: () {
                     if (mounted) {
                       // <--- Añadir verificación mounted
                       setState(() => _selectedIndex = 4);
