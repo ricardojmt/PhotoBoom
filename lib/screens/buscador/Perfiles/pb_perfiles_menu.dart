@@ -37,7 +37,7 @@ class PbPerfilesmenu extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    busquedaperfiles(),
+                    perfileseleccionado(),
                     busquedaimagenes(),
                   ],
                 ),
