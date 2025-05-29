@@ -3,6 +3,7 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/botonconfirmacion.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/core/app_tipo_text.dart';
+<<<<<<< HEAD:lib/screens/pb_inicio_sesion.dart
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/screens/pb_feed.dart';
 import 'package:photoboom/screens/pb_olvide_contrasena.dart';
@@ -10,6 +11,10 @@ import 'package:photoboom/screens/pb_registrarse.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+=======
+import 'package:photoboom/screens/Inicio/pb_olvide_contrasena.dart';
+import 'package:photoboom/screens/Inicio/pb_registrarse.dart';
+>>>>>>> origin/Ricardo:lib/screens/Inicio/pb_inicio_sesion.dart
 
 class PbInicioSesion extends StatelessWidget {
   static String id = "pb_inicio_sesion";

@@ -18,6 +18,7 @@ class PbOlvideContrasena extends StatelessWidget {
           children: [
             Flechainicio(),
             Logopequeno(),
+            flechainicio(),
             Expanded(
               child: Center(
                 child: Column(

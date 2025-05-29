@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:photoboom/components/botonconfirmacion.dart';
 import 'package:photoboom/components/botonvolver.dart';
 import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
@@ -270,6 +269,25 @@ class _PbFeedState extends State<PbFeed> {
                   Flechainicio(),
                   Logopequeno(),
                 ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Logopequeno(),
+              ],
+            ),
+            
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Textoco(),
+                    Textola(),
+                    SizedBox(height: 15.0),
+                    Correo(),
+                    SizedBox(height: 15.0),
+                  ],
+                ),
               ),
             ),
             Expanded(

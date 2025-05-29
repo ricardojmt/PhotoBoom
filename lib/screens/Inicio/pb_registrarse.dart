@@ -7,12 +7,12 @@ import 'package:photoboom/core/app_tipo_text.dart';
 import 'package:photoboom/screens/pb_inicio_sesion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:photoboom/screens/Inicio/pb_inicio_sesion.dart';
 
 class PbRegistrarse extends StatelessWidget {
   static String id = "pb_resgistrarse";
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController nameuserController = TextEditingController();
-  
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _registerauth = FirebaseAuth.instance;
