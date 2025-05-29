@@ -4,7 +4,7 @@ import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
-import 'package:photoboom/components/barrabusqueda.dart';
+import 'package:photoboom/components/Busqueda/barrabusqueda.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photoboom/components/imagenesorden.dart';
 

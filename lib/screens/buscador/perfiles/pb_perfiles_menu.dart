@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:photoboom/components/botonvolver.dart';
-import 'package:photoboom/components/datosgenerales.dart';
 import 'package:photoboom/components/logo.dart';
-import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/Busqueda/barrabusqueda.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:photoboom/components/imagenesorden.dart';
 import 'package:photoboom/components/Busqueda/categorias.dart';
 
-class PbImagenesCategorias extends StatelessWidget {
-  static String id = "pb_imagenes_categorias";
+class PbPerfilesmenu extends StatelessWidget {
+  static String id = "pb_perfiles_menu";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +24,7 @@ class PbImagenesCategorias extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: Logopequenoimagenes(),
+                      child: Logopequenoperfiles(),
                     ),
                   ],
                 ),
@@ -36,8 +32,8 @@ class PbImagenesCategorias extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    imagenescategoriaseleccionada(),
-                    imagenestendencia(),
+                    perfileseleccionado(),
+                    busquedaimagenes(),
                   ],
                 ),
               ],

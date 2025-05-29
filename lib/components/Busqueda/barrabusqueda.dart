@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_categorias.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_menu.dart';
+import 'package:photoboom/screens/buscador/perfiles/pb_perfiles_menu.dart';
 
 class busquedaperfiles extends StatelessWidget{
   Widget build (BuildContext context){
@@ -14,6 +15,7 @@ class busquedaperfiles extends StatelessWidget{
       colorselec: const Color(0xFF4E4F50),
       colortexto: const Color(0xFF000000),
       colorselectexto: const Color(0xFFFFFFFF),
+      cambio: PbPerfilesmenu.id,
     );
   }
 }
@@ -57,6 +59,22 @@ class imagenescategoriaseleccionada extends StatelessWidget{
   Widget build (BuildContext context){
     return Busquedaopciones(
       texto: 'Categorías',
+      whidth: 0.40,
+      height: 0.08,
+      alignment: Alignment.topCenter,
+      fontSize: 18,
+      colorBoton: const Color(0xFFFF0000),
+      colorselec: const Color(0xFFFF0000),
+      colortexto: const Color(0xFFFFFFFF),
+      colorselectexto: const Color(0xFFFFFFFF),
+    );
+  }
+}
+
+class perfileseleccionado extends StatelessWidget{
+  Widget build (BuildContext context){
+    return Busquedaopciones(
+      texto: 'Perfiles',
       whidth: 0.40,
       height: 0.08,
       alignment: Alignment.topCenter,

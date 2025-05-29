@@ -16,8 +16,7 @@ import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_categorias.dart';
 import 'package:photoboom/screens/buscador/imagenes/pb_imagenes_menu.dart';
 import 'package:photoboom/screens/buscador/pb_buscador.dart';
-import 'package:photoboom/screens/pb_camara.dart';
-
+import 'package:photoboom/screens/buscador/perfiles/pb_perfiles_menu.dart';
 void main() {
   runApp(const MainApp());
 }
@@ -52,8 +51,8 @@ class MainApp extends StatelessWidget {
         PbBuscador.id: (context) => PbBuscador(),
         PbImagenesmenu.id: (context) => PbImagenesmenu(),
         PbImagenesCategorias.id: (context) => PbImagenesCategorias(),
-        //Camara
-        PbCamara.id: (context) => const PbCamara(),
+        PbPerfilesmenu.id: (context) => PbPerfilesmenu(),
+
       },
     );
   }

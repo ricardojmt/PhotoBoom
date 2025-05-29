@@ -5,7 +5,6 @@ import 'package:photoboom/screens/Feed/pb_feed.dart';
 import 'package:photoboom/screens/Portafolio/pb_portafolio.dart';
 import 'package:photoboom/screens/ajustes/pb_ajustes.dart';
 import 'package:photoboom/screens/buscador/pb_buscador.dart';
-import 'package:photoboom/screens/pb_camara.dart';
 
 class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -41,7 +40,6 @@ class fotos extends StatelessWidget {
     return Botonvolver(
       icon: Icons.camera_alt_rounded,
       color: AppColores.logotext,
-      cambio: PbCamara.id,
     );
   }
 }
