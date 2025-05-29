@@ -25,17 +25,12 @@ class _PbRetosState extends State<PbRetos> {
   @override
   void initState() {
     super.initState();
-    // Opcional: Si quieres que la cámara se abra automáticamente al entrar a PbRetos
-    // _initializeCamera();
+    // _initializeCamera(); // opcional si quieres activar al entrar
   }
 
-  // --- MÉTODOS ASÍNCRONOS Y AUXILIARES ---
-
   Future<void> _initializeCamera() async {
-    // 1. Solicitar y verificar permisos
     var cameraStatus = await Permission.camera.status;
-    var microphoneStatus =
-        await Permission.microphone.status; // Si grabas video con audio
+    var microphoneStatus = await Permission.microphone.status;
 
     if (cameraStatus.isDenied || microphoneStatus.isDenied) {
       final statuses = await [
@@ -49,10 +44,9 @@ class _PbRetosState extends State<PbRetos> {
       if (cameraStatus.isPermanentlyDenied ||
           microphoneStatus.isPermanentlyDenied) {
         if (mounted) {
-          _mostrarError(
-              'Permisos de cámara o micrófono denegados permanentemente. Por favor, habilítelos desde la configuración de la aplicación.');
+          _mostrarError('Permisos de cámara o micrófono denegados permanentemente. Por favor, habilítelos desde la configuración de la aplicación.');
         }
-        await openAppSettings(); // Abre la configuración de la app para que el usuario habilite los permisos
+        await openAppSettings();
         return;
       }
       if (cameraStatus.isDenied || microphoneStatus.isDenied) {
@@ -64,14 +58,12 @@ class _PbRetosState extends State<PbRetos> {
     }
 
     if (cameraStatus.isGranted && microphoneStatus.isGranted) {
-      // 2. Intentar inicializar la cámara solo si los permisos están concedidos
       if (_cameras.isEmpty) {
         try {
           _cameras = await availableCameras();
         } on CameraException catch (e) {
           if (mounted) {
-            _mostrarError(
-                'Error al obtener cámaras disponibles: ${e.description}');
+            _mostrarError('Error al obtener cámaras disponibles: ${e.description}');
           }
           return;
         } catch (e) {
@@ -83,9 +75,7 @@ class _PbRetosState extends State<PbRetos> {
       }
 
       if (_cameras.isNotEmpty) {
-        if (_cameraController != null &&
-            _cameraController!.value.isInitialized) {
-          // Si el controlador ya está inicializado y activo, no hagas nada
+        if (_cameraController != null && _cameraController!.value.isInitialized) {
           if (mounted) {
             setState(() {
               _isCameraActive = true;
@@ -95,8 +85,7 @@ class _PbRetosState extends State<PbRetos> {
         }
 
         try {
-          _cameraController =
-              CameraController(_cameras[0], ResolutionPreset.medium);
+          _cameraController = CameraController(_cameras[0], ResolutionPreset.medium);
           await _cameraController!.initialize();
           if (mounted) {
             setState(() {
@@ -108,7 +97,6 @@ class _PbRetosState extends State<PbRetos> {
           if (mounted) {
             _mostrarError('Error al inicializar la cámara: ${e.description}');
           }
-          // Asegúrate de limpiar si hubo un error en la inicialización
           await _cameraController?.dispose();
           _cameraController = null;
           if (mounted) {
@@ -124,19 +112,15 @@ class _PbRetosState extends State<PbRetos> {
         }
       } else {
         if (mounted) {
-          _mostrarError(
-              'No se encontraron cámaras disponibles en este dispositivo.');
+          _mostrarError('No se encontraron cámaras disponibles en este dispositivo.');
         }
       }
     }
   }
 
   Future<void> _takePicture() async {
-    if (!_isCameraInitialized ||
-        _cameraController == null ||
-        !_cameraController!.value.isInitialized) {
+    if (!_isCameraInitialized || _cameraController == null || !_cameraController!.value.isInitialized) {
       if (mounted) {
-        // Verificar antes de _mostrarError
         _mostrarError("Cámara no inicializada o no lista. Intenta de nuevo.");
       }
       return;
@@ -147,29 +131,24 @@ class _PbRetosState extends State<PbRetos> {
       if (kIsWeb) {
         final bytes = await file.readAsBytes();
         if (mounted) {
-          // Verificar antes de setState
           setState(() {
             _webImage = bytes;
             _image = null;
-            _isCameraActive =
-                false; // Desactivar la vista de la cámara después de tomar la foto
+            _isCameraActive = false;
           });
         }
       } else {
         if (mounted) {
-          // Verificar antes de setState
           setState(() {
             _image = file;
             _webImage = null;
-            _isCameraActive =
-                false; // Desactivar la vista de la cámara después de tomar la foto
+            _isCameraActive = false;
           });
         }
       }
-      await _stopCamera(); // Detener el controlador de la cámara
+      await _stopCamera();
     } catch (e) {
       if (mounted) {
-        // Verificar antes de _mostrarError
         _mostrarError("Error al tomar la foto: $e");
       }
     }
@@ -181,7 +160,6 @@ class _PbRetosState extends State<PbRetos> {
       _cameraController = null;
     }
     if (mounted) {
-      // Verificar antes de setState
       setState(() {
         _isCameraInitialized = false;
         _isCameraActive = false;
@@ -190,20 +168,15 @@ class _PbRetosState extends State<PbRetos> {
   }
 
   Future<void> _tomarFoto() async {
-    // Asegurarse de detener la cámara si está activa, antes de iniciar una nueva acción de cámara/galería.
     await _stopCamera();
 
     if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
-      // Para web/desktop, inicializar la vista previa de la cámara integrada.
       await _initializeCamera();
     } else {
-      // Para móvil, usar ImagePicker directamente para abrir la cámara.
       final ImagePicker picker = ImagePicker();
-      final XFile? takenImage =
-          await picker.pickImage(source: ImageSource.camera);
+      final XFile? takenImage = await picker.pickImage(source: ImageSource.camera);
       if (takenImage != null) {
         if (mounted) {
-          // Verificar antes de setState
           setState(() {
             _image = takenImage;
             _webImage = null;
@@ -211,7 +184,6 @@ class _PbRetosState extends State<PbRetos> {
         }
       } else {
         if (mounted) {
-          // Verificar antes de _mostrarError
           _mostrarError("No se tomó ninguna foto.");
         }
       }
@@ -219,16 +191,13 @@ class _PbRetosState extends State<PbRetos> {
   }
 
   Future<void> _subirDesdeGaleria() async {
-    // Asegurarse de detener la cámara si está activa, antes de iniciar una nueva acción de cámara/galería.
     await _stopCamera();
 
     try {
       if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
-        FilePickerResult? result =
-            await FilePicker.platform.pickFiles(type: FileType.image);
+        FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
         if (result != null) {
           if (mounted) {
-            // Verificar antes de setState
             setState(() {
               _webImage = result.files.single.bytes;
               _image = null;
@@ -236,17 +205,14 @@ class _PbRetosState extends State<PbRetos> {
           }
         } else {
           if (mounted) {
-            // Verificar antes de _mostrarError
             _mostrarError("No se seleccionó ninguna imagen.");
           }
         }
       } else {
         final ImagePicker picker = ImagePicker();
-        final XFile? pickedImage =
-            await picker.pickImage(source: ImageSource.gallery);
+        final XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
         if (pickedImage != null) {
           if (mounted) {
-            // Verificar antes de setState
             setState(() {
               _image = pickedImage;
               _webImage = null;
@@ -254,14 +220,12 @@ class _PbRetosState extends State<PbRetos> {
           }
         } else {
           if (mounted) {
-            // Verificar antes de _mostrarError
             _mostrarError("No se seleccionó ninguna imagen.");
           }
         }
       }
     } catch (e) {
       if (mounted) {
-        // Verificar antes de _mostrarError
         _mostrarError("Error al subir imagen desde la galería: $e");
       }
     }
@@ -269,9 +233,7 @@ class _PbRetosState extends State<PbRetos> {
 
   void _mostrarError(String mensaje) {
     if (mounted) {
-      // Siempre verificar mounted antes de usar context con ScaffoldMessenger
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(mensaje)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
     }
   }
 
@@ -284,21 +246,18 @@ class _PbRetosState extends State<PbRetos> {
       return Container(
         height: 200,
         color: Colors.grey.shade300,
-        child: const Center(
-            child: Icon(Icons.image, size: 50, color: Colors.grey)),
+        child: const Center(child: Icon(Icons.image, size: 50, color: Colors.grey)),
       );
     }
   }
 
-  // --- CICLO DE VIDA DEL WIDGET ---
   @override
   void dispose() {
-    _stopCamera(); // Asegurarse de detener la cámara y liberar recursos
+    _stopCamera();
     _cameraController?.dispose();
     super.dispose();
   }
 
-  // --- CONSTRUCCIÓN DE LA INTERFAZ DE USUARIO ---
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,26 +267,22 @@ class _PbRetosState extends State<PbRetos> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            _stopCamera(); // Detener la cámara antes de salir de la pantalla
+            _stopCamera();
             Navigator.pop(context);
           },
         ),
       ),
       body: Stack(
         children: [
-          // Si la cámara está activa, muestra su vista previa ocupando gran parte del espacio
           if (_isCameraInitialized && _isCameraActive)
             Align(
               alignment: Alignment.center,
               child: SizedBox(
-                // Ajusta estos tamaños para que la vista previa de la cámara no sea demasiado grande
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height *
-                    0.7, // Por ejemplo, 70% de la altura de la pantalla
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: CameraPreview(_cameraController!),
               ),
             )
-          // Si la cámara no está activa, muestra el formulario de publicación de retos
           else
             SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -341,19 +296,21 @@ class _PbRetosState extends State<PbRetos> {
                       ElevatedButton.icon(
                         icon: const Icon(Icons.camera_alt),
                         label: const Text('Tomar Foto'),
-                        onPressed:
-                            _tomarFoto, // Llama a la función para tomar foto (que puede iniciar la cámara)
+                        onPressed: _tomarFoto,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red),
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
                       ),
                       const SizedBox(width: 20),
                       ElevatedButton.icon(
                         icon: const Icon(Icons.upload),
                         label: const Text('Subir Imagen'),
-                        onPressed:
-                            _subirDesdeGaleria, // Llama a la función para subir desde galería
+                        onPressed: _subirDesdeGaleria,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red),
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -362,7 +319,8 @@ class _PbRetosState extends State<PbRetos> {
                     decoration: InputDecoration(
                       hintText: 'Descripción del reto',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     maxLines: 3,
                   ),
@@ -370,17 +328,17 @@ class _PbRetosState extends State<PbRetos> {
                   ElevatedButton(
                     onPressed: () {
                       if (mounted) {
-                        // Verificar antes de ScaffoldMessenger
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Publicación enviada")),
                         );
                       }
-                      // Aquí podrías añadir la lógica para enviar el reto a una base de datos
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       minimumSize: const Size.fromHeight(50),
                     ),
                     child: const Text('Publicar'),
@@ -388,17 +346,14 @@ class _PbRetosState extends State<PbRetos> {
                 ],
               ),
             ),
-          // Botón flotante para tomar foto (solo si la cámara está en modo de vista previa)
           if (_isCameraInitialized && _isCameraActive)
             Positioned(
               bottom: 40,
               left: MediaQuery.of(context).size.width / 2 - 40,
-              child: ElevatedButton(
-                onPressed:
-                    _takePicture, // Este botón toma la foto cuando la vista previa está activa
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                child:
-                    const Icon(Icons.camera_alt, color: Colors.white, size: 36),
+              child: FloatingActionButton(
+                onPressed: _takePicture,
+                backgroundColor: Colors.green,
+                child: const Icon(Icons.camera_alt, color: Colors.white, size: 36),
               ),
             ),
         ],

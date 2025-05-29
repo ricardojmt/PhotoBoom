@@ -38,7 +38,6 @@ class PbRegistrarse extends StatelessWidget {
     } catch (e) {
       print('Error al registrarse:$e');
       return e.toString();
-      ;
     }
   }
 
@@ -48,86 +47,79 @@ class PbRegistrarse extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColores.backgrounds,
         body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Logogrande(),
-            SizedBox(
-              height: 20.0,
-            ),
-            Nombre(
-              controller: fullnameController,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Usuario(
-              controller: nameuserController,
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Correo(
-              controller: emailController,
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Contras(
-              controller: passwordController,
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, PbInicioSesion.id);
-                  },
-                  child: Text("Iniciar sesión", style: AppTipoText.texto),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    String email = emailController.text.trim();
-                    String password = passwordController.text.trim();
-                    String fullname = fullnameController.text;
-                    String nameuser = nameuserController.text.trim();
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Logogrande(),
+              SizedBox(height: 20.0),
+              Nombre(controller: fullnameController),
+              SizedBox(height: 20.0),
+              Usuario(controller: nameuserController),
+              SizedBox(height: 15.0),
+              Correo(controller: emailController),
+              SizedBox(height: 15.0),
+              Contras(controller: passwordController),
+              SizedBox(height: 15.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, PbInicioSesion.id);
+                    },
+                    child: Text("Iniciar sesión", style: AppTipoText.texto),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      String email = emailController.text.trim();
+                      String password = passwordController.text.trim();
+                      String fullname = fullnameController.text;
+                      String nameuser = nameuserController.text.trim();
 
-                    if (email.isEmpty ||
-                        password.isEmpty ||
-                        fullname.isEmpty ||
-                        nameuser.isEmpty) {
-                      print('Rellena todos los campos.');
-                      return;
-                    }
+                      if (email.isEmpty ||
+                          password.isEmpty ||
+                          fullname.isEmpty ||
+                          nameuser.isEmpty) {
+                        print('Rellena todos los campos.');
+                        return;
+                      }
 
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(email)) {
-                      print("El correo electrónico no es válido.");
-                      return;
-                    }
+                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(email)) {
+                        print("El correo electrónico no es válido.");
+                        return;
+                      }
 
-                    String? user =
-                        await registeruser(fullname, nameuser, email, password);
-                    if (user == null) {
-                      //Si no hay error en la autenticación, navega al feed
-                      Navigator.pop(context);
-                    } else {
-                      print('Error:$user');
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(user),
-                      ));
-                    }
-                  },
-                  child: Text("Registrarse", style: AppTipoText.texto),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Registrarme(),
-          ]),
+                      String? user = await registeruser(
+                          fullname, nameuser, email, password);
+                      if (user == null) {
+                        Navigator.pop(context);
+                      } else {
+                        print('Error:$user');
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(user),
+                        ));
+                      }
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        "Registrarse",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.0),
+              // Registrarme(), // Eliminado
+            ],
+          ),
         ),
       ),
     );
