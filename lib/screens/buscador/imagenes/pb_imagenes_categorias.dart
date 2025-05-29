@@ -5,12 +5,12 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/barrabusqueda.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photoboom/components/imagenesorden.dart';
 import 'package:photoboom/components/categorias.dart';
 
 class PbImagenesCategorias extends StatelessWidget {
   static String id = "pb_imagenes_categorias";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,37 +43,40 @@ class PbImagenesCategorias extends StatelessWidget {
               ],
             ),
             Expanded(
-  child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: SingleChildScrollView(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 10,
-        runSpacing: 10,
-        children: [
-          Arquitectura(),
-          ArteyCreatividad(),
-          Naturaleza(),
-          Viajes(),
-          Personas(),
-          ComidayBebida(),
-          Animalesdomesticos(),
-          Fotografianocturna(),
-        ],
-      ),
-    ),
-  ),
-),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                feed(),
-                retos(),
-                fotos(),
-                corazon(),
-                perfil(),
-              ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: const [
+                      Arquitectura(),
+                      ArteyCreatividad(),
+                      Naturaleza(),
+                      Viajes(),
+                      Personas(),
+                      ComidayBebida(),
+                      Animalesdomesticos(),
+                      Fotografianocturna(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  feed(),
+                  retos(),
+                  fotos(),
+                  corazon(),
+                  perfil(),
+                ],
+              ),
             ),
           ],
         ),

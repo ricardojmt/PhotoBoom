@@ -9,7 +9,6 @@ import 'package:photoboom/screens/pb_camara.dart';
 
 class Flechainicio extends StatelessWidget {
   @override
-class flechainicio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Botonvolver(
       alignment: Alignment.topLeft,
@@ -30,7 +29,12 @@ class Feed extends StatelessWidget {
       icon: Icons.remove_red_eye,
       color: AppColores.logotext,
       onPressed: onPressed,
-class feed extends StatelessWidget {
+    );
+  }
+}
+
+class FeedAtajo extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       icon: Icons.remove_red_eye,
@@ -44,15 +48,24 @@ class Retos extends StatelessWidget {
   final VoidCallback onPressed;
 
   const Retos({required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return BotonIcono(
-class retos extends StatelessWidget {
+      icon: Icons.fiber_new_rounded,
+      color: AppColores.logotext,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class RetosAtajo extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       icon: Icons.fiber_new_rounded,
       color: AppColores.logotext,
-      onPressed: onPressed,
+      cambio: '', // Reemplaza con la ruta deseada si existe
     );
   }
 }
@@ -68,7 +81,12 @@ class Fotos extends StatelessWidget {
       icon: Icons.camera_alt_rounded,
       color: AppColores.logotext,
       onPressed: onPressed,
-class fotos extends StatelessWidget {
+    );
+  }
+}
+
+class FotosAtajo extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       icon: Icons.camera_alt_rounded,
@@ -89,7 +107,12 @@ class Corazon extends StatelessWidget {
       icon: Icons.favorite,
       color: AppColores.logotext,
       onPressed: onPressed,
-class corazon extends StatelessWidget {
+    );
+  }
+}
+
+class CorazonAtajo extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       icon: Icons.heart_broken_sharp,
@@ -110,7 +133,12 @@ class Perfil extends StatelessWidget {
       icon: Icons.person,
       color: AppColores.logotext,
       onPressed: onPressed,
-class perfil extends StatelessWidget {
+    );
+  }
+}
+
+class PerfilAtajo extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       icon: Icons.person,
@@ -120,7 +148,8 @@ class perfil extends StatelessWidget {
   }
 }
 
-class configuraciones extends StatelessWidget {
+class Configuraciones extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Botonvolver(
       alignment: Alignment.topRight,
@@ -132,40 +161,6 @@ class configuraciones extends StatelessWidget {
 }
 
 class Botonvolver extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-
-  const Botonvolver({required this.icon, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon, color: color),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-}
-
-class BotonIcono extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final VoidCallback onPressed;
-
-  const BotonIcono({
-    required this.icon,
-    required this.color,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter, // Puedes cambiar esto según necesidad
-      child: IconButton(
-        icon: Icon(icon, color: color),
-        onPressed: onPressed,
   final IconData? icon;
   final Color? color;
   final String? cambio;
@@ -185,12 +180,35 @@ class BotonIcono extends StatelessWidget {
       child: IconButton(
         icon: Icon(icon, color: color),
         onPressed: () {
-          if (cambio != null) {
+          if (cambio != null && cambio!.isNotEmpty) {
             Navigator.pushNamed(context, cambio!);
           } else {
             Navigator.pop(context);
           }
-        }
+        },
+      ),
+    );
+  }
+}
+
+class BotonIcono extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final VoidCallback onPressed;
+
+  const BotonIcono({
+    required this.icon,
+    required this.color,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: onPressed,
       ),
     );
   }

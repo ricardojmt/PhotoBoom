@@ -261,20 +261,24 @@ class _PbFeedState extends State<PbFeed> {
         backgroundColor: AppColores.backgrounds,
         body: Column(
           // Main Column encapsulando todo
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-              child: Row(
-                children: [
-                  Flechainicio(),
-                  Logopequeno(),
-                ],
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Logopequeno(),
-              ],
-            ),
+         children: [
+  Padding(
+    padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+    child: Row(
+      children: [
+        Flechainicio(),
+        Logopequeno(),
+      ],
+    ),
+  ),
+  Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Logopequeno(),
+    ],
+  ),
+],
+
             
             Expanded(
               child: Center(

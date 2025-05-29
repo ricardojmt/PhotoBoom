@@ -5,13 +5,11 @@ import 'package:photoboom/components/logo.dart';
 import 'package:photoboom/components/textos.dart';
 import 'package:photoboom/core/app_colores.dart';
 import 'package:photoboom/components/barrabusqueda.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photoboom/components/imagenesorden.dart';
-
-
 
 class PbImagenesmenu extends StatelessWidget {
   static String id = "pb_imagenes_menu";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,7 +31,7 @@ class PbImagenesmenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                BarraBusqueda(),
+                const BarraBusqueda(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -44,27 +42,30 @@ class PbImagenesmenu extends StatelessWidget {
               ],
             ),
             Expanded(
-  child: GaleriaImagenes(
-    imagePaths: [
-      'assets/img/imagen4.jpeg',
-      'assets/img/imagen2.jpeg',
-      'assets/img/imagen3.jpeg',
-      'assets/img/imagen1.jpeg',
-      'assets/img/imagen6.jpeg',
-      'assets/img/imagen5.jpg',
-    ],
-  ),
-),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                feed(),
-                retos(),
-                fotos(),
-                corazon(),
-                perfil(),
-              ],
+              child: GaleriaImagenes(
+                imagePaths: [
+                  'assets/img/imagen4.jpeg',
+                  'assets/img/imagen2.jpeg',
+                  'assets/img/imagen3.jpeg',
+                  'assets/img/imagen1.jpeg',
+                  'assets/img/imagen6.jpeg',
+                  'assets/img/imagen5.jpg',
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  feed(),
+                  retos(),
+                  fotos(),
+                  corazon(),
+                  perfil(),
+                ],
+              ),
             ),
           ],
         ),
